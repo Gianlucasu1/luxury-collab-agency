@@ -1,0 +1,42 @@
+import luxuryEscape2 from '@/assets/luxury escape2.jpg';
+
+const BlogSubscription = () => {
+  return (
+    <section
+      className="relative w-full min-h-[400px] flex items-center justify-center overflow-hidden"
+      style={{
+        height: '420px',
+        backgroundImage: `url(${luxuryEscape2})`,
+        backgroundAttachment: 'fixed',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
+      {/* Gentle Dark Overlay */}
+      <div className="absolute inset-0 bg-black/50" />
+      {/* Content */}
+      <div className="relative z-10 w-full flex flex-col items-center justify-center text-center px-4">
+        <h2 className="text-3xl md:text-4xl font-primary font-bold text-white mb-4 drop-shadow-lg">Subscribe to Our Luxury Blog</h2>
+        <p className="text-lg md:text-xl text-white/80 mb-8 max-w-2xl mx-auto drop-shadow">
+          Get exclusive insights, travel inspiration, and premium offers delivered to your inbox. Join our elite community!
+        </p>
+        <form className="flex flex-col sm:flex-row gap-4 w-full max-w-xl mx-auto">
+          <input
+            type="email"
+            required
+            placeholder="Enter your email"
+            className="flex-1 px-6 py-4 rounded-full bg-white/90 text-elite-teal placeholder:text-elite-teal/60 focus:outline-none focus:ring-2 focus:ring-accent text-lg shadow"
+          />
+          <button
+            type="submit"
+            className="luxury-button px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:scale-105 transition-transform"
+          >
+            Subscribe
+          </button>
+        </form>
+      </div>
+    </section>
+  );
+};
+
+export default BlogSubscription; 
