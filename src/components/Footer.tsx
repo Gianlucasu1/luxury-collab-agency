@@ -1,8 +1,8 @@
 import { Facebook, Instagram, Twitter, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import logo from '@/assets/logo.png';
-import luxuryCollabLogo from '@/assets/luxurycollablogo.png';
+import logo from '@/assets/white_logo.png';
+import luxuryCollabLogo from '@/assets/white_logo_complete.png';
 
 const Footer = () => {
   const socialLinks = [
@@ -14,141 +14,104 @@ const Footer = () => {
 
   const footerLinks = {
     'Services': [
-      'Private Jets',
-      'Luxury Resorts',
-      'Exotic Cars',
-      'Yacht Charters',
-      'Exclusive Events'
+      { label: 'Luxury Yachts & Sailing', href: '/yacht-services' },
+      { label: 'Private Jets & Aerial Escapes', href: '/private-jets' },
+      { label: 'Luxury Getaways', href: '/luxury-getaways' },
     ],
     'Company': [
-      'About Us',
-      'Our Partners',
-      'Careers',
-      'Press',
-      'Contact'
+      { label: 'About Us', href: '/about-us' },
+      { label: 'Contact Us', href: '#' },
+      { label: 'Blog', href: '/blog' },
     ],
     'Support': [
-      'Help Center',
-      'Terms of Service',
-      'Privacy Policy',
-      'Cookie Policy',
-      'Accessibility'
+      { label: 'Help Center', href: '#' },
+      { label: 'Terms of Service', href: '#' },
+      { label: 'Privacy Policy', href: '#' },
+      { label: 'Cookie Policy', href: '#' },
     ]
-  };
+  } as const;
 
   return (
-    <footer id="contact" className="bg-elite-teal-dark pt-32 pb-8 relative">
+    <footer id="contact" className="bg-[#11353e] pt-32 pb-8 relative">
       {/* Centered Logo with Circular Frame */}
       <div className="absolute left-1/2 transform -translate-x-1/2 -top-20 z-10">
-        <div className="w-40 h-40 bg-elite-teal-dark rounded-full border-4 border-brand-tertiary/20 shadow-xl flex items-center justify-center">
-          <img 
-            src={logo} 
-            alt="The Luxury Collab Agency" 
-            className="w-28 h-28 object-contain"
+        <div className="w-48 h-48 bg-[#11353e] rounded-full flex items-center justify-center">
+          <img
+            src={logo}
+            alt="The Luxury Collab Agency"
+            className="w-36 h-36 object-contain"
           />
         </div>
       </div>
-      
+
       <div className="container mx-auto px-6">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 mb-12">
-          {/* Brand Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 mb-12">
+          {/* First Brand Section */}
           <div className="lg:col-span-1">
             <div className="mb-6">
-              <img 
-                src={luxuryCollabLogo} 
-                alt="The Luxury Collab Agency" 
+              <img
+                src={luxuryCollabLogo}
+                alt="The Luxury Collab Agency"
                 className="w-48 h-auto object-contain"
               />
             </div>
-            <p className="text-muted-foreground font-secondary leading-relaxed mb-6">
+            <p className="text-white font-secondary leading-relaxed mb-6">
               Connecting elite clients with the world's most exclusive experiences. Where luxury meets perfection.
             </p>
-            
-            {/* Contact Info */}
-            <div className="space-y-3">
-              <div className="flex items-center text-muted-foreground">
-                <Phone className="w-4 h-4 mr-3 text-accent" />
-                <span className="font-secondary">+1 (555) 123-LUXE</span>
-              </div>
-              <div className="flex items-center text-muted-foreground">
-                <Mail className="w-4 h-4 mr-3 text-accent" />
-                <span className="font-secondary">concierge@luxora.com</span>
-              </div>
-              <div className="flex items-center text-muted-foreground">
-                <MapPin className="w-4 h-4 mr-3 text-accent" />
-                <span className="font-secondary">Beverly Hills, CA</span>
-              </div>
-            </div>
           </div>
 
-          {/* Links Sections */}
-          {Object.entries(footerLinks).map(([category, links]) => (
-            <div key={category}>
-              <h3 className="text-xl font-primary font-semibold text-accent mb-6">
-                {category}
-              </h3>
-              <ul className="space-y-3">
-                {links.map((link) => (
-                  <li key={link}>
-                    <a
-                      href="#"
-                      className="text-muted-foreground hover:text-accent transition-colors duration-300 font-secondary"
-                    >
-                      {link}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-
-        {/* Newsletter Section */}
-        <div className="border-t border-accent/20 pt-12 mb-8">
-          <div className="max-w-md mx-auto text-center">
-            <h3 className="text-2xl font-primary font-semibold text-foreground mb-4">
-              Stay in the <span className="text-accent">Loop</span>
-            </h3>
-            <p className="text-muted-foreground font-secondary mb-6">
-              Subscribe to receive exclusive offers and luxury travel insights
-            </p>
-            <div className="flex gap-3">
-              <Input 
-                type="email" 
-                placeholder="Enter your email"
-                className="bg-elite-teal-light border-accent/30 text-foreground placeholder:text-muted-foreground"
-              />
-              <Button className="luxury-button whitespace-nowrap">
-                Subscribe
-              </Button>
-            </div>
+          {/* Links Sections (middle) with separators */}
+          <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-12">
+            {Object.entries(footerLinks).map(([category, links], idx) => (
+              <div key={category} className={`${idx > 0 ? 'sm:border-l sm:border-white/20 sm:pl-6' : ''} text-center`}>
+                <h3 className="text-xl text-[#efb958] font-primary font-semibold mb-6">
+                  {category}
+                </h3>
+                <ul className="space-y-3">
+                  {links.map((link) => (
+                    <li key={link.label}>
+                      <a
+                        href={link.href}
+                        className="text-white hover:text-[#efb958] transition-colors duration-300 font-secondary"
+                      >
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
-        </div>
 
-        {/* Social Links & Copyright */}
-        <div className="border-t border-accent/20 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="flex space-x-6 mb-4 md:mb-0">
+          {/* Last section: Social + Contact Info */}
+          <div className="lg:col-span-1">
+            <div className="flex space-x-6 mb-6 justify-start">
               {socialLinks.map((social) => {
                 const Icon = social.icon;
                 return (
                   <a
                     key={social.label}
                     href={social.href}
-                    className="w-10 h-10 bg-accent/10 hover:bg-accent/20 rounded-full flex items-center justify-center transition-colors duration-300 group"
+                    className="text-white/90 hover:text-[#efb958] transition-colors"
                     aria-label={social.label}
                   >
-                    <Icon className="w-5 h-5 text-accent group-hover:scale-110 transition-transform duration-300" />
+                    <Icon className="w-6 h-6" />
                   </a>
                 );
               })}
             </div>
-            
-            <div className="text-center">
-              <p className="text-muted-foreground font-secondary text-sm">
-                © 2024 The Luxury Collab Agency. All rights reserved. Designed for the discerning few.
-              </p>
+            <div className="space-y-4">
+              <div className="flex items-start text-white">
+                <MapPin className="w-5 h-5 mr-3 text-[#efb958] flex-shrink-0 mt-0.5" />
+                <span className="font-secondary">Location in the US</span>
+              </div>
+              <div className="flex items-start text-white">
+                <Mail className="w-5 h-5 mr-3 text-[#efb958] flex-shrink-0 mt-0.5" />
+                <span className="font-secondary text-sm lg:text-base whitespace-nowrap">
+                  contact@theluxurycollabagency.com
+                </span>
+              </div>              
             </div>
           </div>
         </div>

@@ -16,10 +16,10 @@ const PartnersSection = () => {
   const allPartners = [...partners, ...partners];
 
   return (
-    <section id="partners" className="py-24 bg-elite-teal relative">
+    <section id="partners" className="py-24 relative bg-[#11353e]">
       <div className="text-center mb-16 container mx-auto px-6">
         <h2 className="text-4xl md:text-5xl font-primary font-bold text-foreground mb-6">
-            Our <span className="text-accent">Prestigious</span> Partners
+            Our <span className="text-[#efb958]">Prestigious</span> Partners
           </h2>
         <p className="text-xl text-muted-foreground font-secondary max-w-2xl mx-auto">
             Collaborating with the world's most distinguished luxury brands
@@ -34,8 +34,8 @@ const PartnersSection = () => {
               key={index}
               className="glass-panel rounded-xl p-8 text-center min-w-[260px] max-w-xs flex-shrink-0 h-[160px] flex flex-col justify-center"
             >
-              <div className="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-accent/20 to-accent/5 rounded-full flex items-center justify-center">
-                <span className="text-2xl font-primary font-bold text-accent">
+              <div className="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-[#efb958]/20 to-[#efb958]/5 rounded-full flex items-center justify-center">
+                <span className="text-2xl font-primary font-bold text-[#efb958]">
                   {partner.name.charAt(0)}
                 </span>
               </div>
@@ -52,7 +52,7 @@ const PartnersSection = () => {
 
       <div className="text-center mt-16 container mx-auto px-6">
         <p className="text-muted-foreground font-secondary text-lg">
-            Join our network of <span className="text-accent font-semibold">50+ premium partners</span> worldwide
+            Join our network of <span className="text-[#efb958] font-semibold">50+ premium partners</span> worldwide
           </p>
       </div>
     </section>

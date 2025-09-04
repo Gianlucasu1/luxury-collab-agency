@@ -22,43 +22,58 @@ const HeroSection = () => {
         }}
       />
       
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-elite-teal/60 via-elite-teal/40 to-elite-teal/80" />
+      {/* Overlay - Dark blue and Nordic Tide */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background: 'linear-gradient(to bottom, #11353eB3, #2a678173, #11353eD9)',
+        }}
+      />
       
-      {/* Strong Radial Shadow for Maximum Text Readability */}
-      <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-black/80 pointer-events-none z-5" />
+      {/* Strong Radial Shadow for Maximum Text Readability (hex colors only) */}
+      <div
+        className="absolute inset-0 pointer-events-none z-5"
+        style={{
+          background: 'radial-gradient(circle at center, #0000 0%, #0000 60%, #000000CC 100%)'
+        }}
+      />
       
-      {/* Content */}
+      {/* Content (constrained) */}
       <div className="relative z-10 h-full flex items-center justify-center">
-        <div className="text-center max-w-4xl mx-auto px-6 relative">
+        <div className="container mx-auto px-6">
+          <div className="text-center max-w-4xl mx-auto relative">
           {/* Semi-transparent background for text */}
-          <div className="absolute inset-0 bg-black/20 rounded-2xl backdrop-blur-sm -m-8" />
+          <div
+            className="absolute inset-0 rounded-2xl -m-8"
+            style={{ backgroundColor: '#00000033' }}
+          />
           <div className="relative z-10">
-          <h1 className="text-5xl md:text-7xl font-primary font-bold text-foreground mb-6 hero-text fade-in">
+          <h1 className="text-5xl md:text-7xl font-primary font-bold text-white mb-6 hero-text fade-in">
             Unlock the World's Most
-            <span className="block text-accent">Exclusive Experiences</span>
+            <span className="block text-[#efb958]">Exclusive Experiences</span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-foreground/90 mb-8 font-secondary font-light max-w-2xl mx-auto fade-in drop-shadow-2xl [text-shadow:_0_4px_12px_rgba(0,0,0,0.9)]">
+          <p className="text-xl md:text-2xl text-white/90 mb-8 font-secondary font-light max-w-2xl mx-auto fade-in drop-shadow-2xl [text-shadow:_0_4px_12px_rgba(0,0,0,0.9)]">
             Private Jets, Luxury Villas, Exotic Cars – At Your Fingertips
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center fade-in">
-            <Button className="luxury-button text-lg px-10 py-6">
+            <Button className="premium-cta-dark text-lg px-10 py-6">
               Explore Experiences
             </Button>
-            <Button variant="outline" className="border-accent text-accent hover:bg-accent hover:text-accent-foreground px-10 py-6 text-lg glass-panel">
+            <Button className="premium-cta text-lg px-10 py-6">
               Watch Our Story
             </Button>
             </div>
           </div>
         </div>
+        </div>
       </div>
       
       {/* Scroll Indicator - Positioned at bottom of hero section */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce z-20">
-        <div className="w-6 h-10 border-2 border-accent rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-accent rounded-full mt-2 animate-pulse"></div>
+        <div className="w-6 h-10 border-2 rounded-full flex justify-center" style={{ borderColor: '#efb958' }}>
+          <div className="w-1 h-3 rounded-full mt-2 animate-pulse" style={{ backgroundColor: '#efb958' }}></div>
         </div>
       </div>
     </section>

@@ -1,0 +1,19 @@
+---
+description: -> use the colors of the brand always 
+GOLD: #efb958
+
+Dark blue: #11353e
+
+Nordic Tide: #2a6781
+
+Beige: #ead4b7
+
+WhiteSand: #f3ede5
+
+Also make sure please to make the components and everything thinking in responsiveness.
+
+Use tailwind allways to style the elements created as much as possible
+
+globs:
+alwaysApply: true
+---

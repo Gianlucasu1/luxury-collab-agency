@@ -36,7 +36,14 @@ const WhyChooseUsGrid = () => {
   ];
 
   return (
-    <section className="py-24 bg-gradient-to-b from-background to-brand-secondary relative overflow-hidden">
+    <section
+      className="py-24 relative overflow-hidden"
+      style={{
+        backgroundImage:
+          'linear-gradient(to bottom, #11353e, #2a6781), linear-gradient(to bottom, rgba(17,53,62,0.6), rgba(42,103,129,0.2))',
+        backgroundBlendMode: 'overlay'
+      }}
+    >
       {/* Background Logo */}
       <div className="absolute inset-0 flex items-center justify-center opacity-15 pointer-events-none">
         <img 

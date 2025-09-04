@@ -1,0 +1,76 @@
+---
+const partnersData = [
+  { name: 'Rolls Royce', category: 'Automotive' },
+  { name: 'Aman Resorts', category: 'Hospitality' },
+  { name: 'NetJets', category: 'Aviation' },
+  { name: 'Four Seasons', category: 'Hotels' },
+  { name: 'Bugatti', category: 'Supercars' },
+  { name: 'Ritz Carlton', category: 'Luxury Hotels' },
+  { name: 'Gulfstream', category: 'Private Jets' },
+  { name: 'Sunseeker', category: 'Yachts' }
+];
+
+// Duplicate the partners array for seamless infinite scroll
+const allPartners = [...partnersData, ...partnersData];
+---
+
+<!-- Partners -->
+<section class="py-20 bg-[#11353e]">
+  <div class="container mx-auto px-6">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl md:text-5xl font-sans font-bold text-[#ead4b7] mb-6">
+        Trusted <span class="text-[#efb958]">Partnerships</span>
+      </h2>
+      <p class="text-xl text-[#ead4b7] font-sans max-w-2xl mx-auto">
+        Collaborating with the world's most prestigious brands
+      </p>
+    </div>
+  </div>
+
+  <!-- Full-width Continuous Slider - spans entire screen -->
+  <div class="relative w-full overflow-x-hidden mt-16 mb-16">
+    <div class="flex gap-8 animate-partners-scroll min-w-max h-[180px] items-center">
+      {allPartners.map((partner, index) => (
+        <div
+          class="glass-panel rounded-xl p-8 text-center min-w-[260px] max-w-xs flex-shrink-0 h-[160px] flex flex-col justify-center"
+          style="background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05)); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);"
+        >
+          <div class="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-[#efb958]/20 to-[#efb958]/5 rounded-full flex items-center justify-center">
+            <span class="text-2xl font-sans font-bold text-[#efb958]">
+              {partner.name.charAt(0)}
+            </span>
+          </div>
+          <h3 class="text-lg font-sans font-semibold text-[#ead4b7] mb-1">
+            {partner.name}
+          </h3>
+          <p class="text-sm text-[#ead4b7] font-sans">
+            {partner.category}
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <div class="container mx-auto px-6">
+    <div class="text-center mt-16">
+      <p class="text-[#ead4b7] font-sans text-lg">
+        Join our network of <span class="text-[#efb958] font-semibold">50+ premium partners</span> worldwide
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes partners-scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  
+  .animate-partners-scroll {
+    animation: partners-scroll 30s linear infinite;
+  }
+</style>
