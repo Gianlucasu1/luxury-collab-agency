@@ -32,7 +32,7 @@ const ComingSoon = () => {
               <img src={brandLogo} alt="The Luxury Collab Agency" className="w-44 h-44 object-contain" />
             </div>
             <h1 className="text-5xl md:text-7xl font-primary font-bold text-white mb-4">
-              Coming <span className="text-[#efb958]">Soon...</span>
+              ¡Coming <span className="text-[#efb958]">Soon!</span>
             </h1>
             <p className="text-lg md:text-xl text-white font-secondary">
               We’re putting the final touches on our new website. Please check back soon.
