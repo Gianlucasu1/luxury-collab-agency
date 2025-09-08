@@ -366,27 +366,27 @@ const BlogMain = () => {
 
                         {/* Blog Posts Grid */}
                         {currentPosts.length > 0 ? (
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-16 lg:gap-20">
+                            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-12 lg:gap-16 xl:gap-20 pb-16 md:pb-20">
                                 {currentPosts.map((post: any) => (
                                     <Link 
                                         to={`/blog/${post.id}`} 
                                         key={post.id} 
-                                        className="block rounded-2xl shadow-xl hover:shadow-2xl transition-shadow duration-300 focus:outline-none focus:ring-2 focus:ring-[#efb958] mb-8"
+                                        className="block rounded-2xl shadow-xl hover:shadow-2xl transition-shadow duration-300 focus:outline-none focus:ring-2 focus:ring-[#efb958] mb-16 md:mb-20"
                                     >
                                         {/* Image container with overlay content */}
                                         <div className="relative">
                                             <img 
                                                 src={post.photo} 
                                                 alt={post.title} 
-                                                className="w-full h-64 md:h-72 lg:h-80 object-cover" 
+                                                className="w-full h-64 md:h-72 xl:h-80 object-cover rounded-t-2xl" 
                                             />
 
                                             {/* Title in white box at the bottom with overlap effect */}
-                                            <div className="absolute w-[70%] mx-auto bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 z-20">
-                                                <div className="w-[100%] bg-white shadow-2xl p-4 md:p-5">
+                                            <div className="absolute w-[85%] md:w-[70%] mx-auto bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 z-20">
+                                                <div className="w-[100%] bg-white shadow-2xl p-4 md:p-5 rounded-lg">
                                                     {/* Date positioned over the white box in left corner */}
                                                     <div className="absolute -top-10 left-0">
-                                                        <div className="bg-[#efb958] px-3 py-2 shadow-md">
+                                                        <div className="bg-[#efb958] px-3 py-2 shadow-md rounded">
                                                             <span className="text-[#11353e] font-secondary font-medium text-sm">
                                                                 {post.date}
                                                             </span>
@@ -394,13 +394,13 @@ const BlogMain = () => {
                                                     </div>
                                                     
                                                     {/* Title in the white box */}
-                                                    <h3 className="text-[#11353e] [font-family:'Libre_Bodoni',serif] font-bold text-base md:text-lg lg:text-xl leading-tight mb-3">
+                                                    <h3 className="text-[#11353e] [font-family:'Libre_Bodoni',serif] font-bold text-sm md:text-base lg:text-lg xl:text-xl leading-tight mb-3">
                                                         {post.title}
                                                     </h3>
                                                     
                                                     {/* Learn More button */}
                                                     <div className="text-center">
-                                                        <span className="inline-block px-4 py-2 text-[#efb958] font-secondary font-semibold text-sm hover:text-[#11353e] transition-all duration-300">
+                                                        <span className="inline-block px-3 py-1 md:px-4 md:py-2 text-[#efb958] font-secondary font-semibold text-xs md:text-sm hover:text-[#11353e] transition-all duration-300">
                                                             Learn More
                                                         </span>
                                                     </div>
@@ -458,7 +458,7 @@ const BlogMain = () => {
 
             {/* Blog Subscription Section */}
             <section
-                className="relative py-20 md:py-24 lg:py-32 overflow-hidden"
+                className="relative py-20 md:py-24 lg:py-32 pb-32 md:pb-40 overflow-hidden"
                 style={{
                     backgroundImage: `url(${blogFooterBg})`,
                     backgroundRepeat: 'no-repeat',

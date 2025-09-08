@@ -28,12 +28,12 @@ const PartnersGrid = () => {
           className="w-[500px] h-auto object-contain"
         />
       </div>
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="main-container mx-auto px-6 relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-primary font-bold text-brand-fifth mb-6">
             Our Prestigious <span className="text-[#efb958]">Partners</span>
           </h2>
-          <p className="text-xl text-brand-quaternary font-secondary max-w-2xl mx-auto">
+          <p className="text-xl text-white font-secondary max-w-2xl mx-auto">
             Trusted collaborations powering unparalleled luxury experiences
           </p>
         </div>

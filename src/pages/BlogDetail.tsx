@@ -272,20 +272,20 @@ const BlogDetail = () => {
                         </h2>
                         {/* Sorters */}
                         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
-                            <div className="flex items-center gap-4">
+                            <div className="flex flex-wrap items-center gap-2 sm:gap-4">
                                 <div className="relative">
-                                    <button className="flex items-center gap-2 px-4 py-2 bg-white text-[#11353e] rounded-lg font-secondary font-medium hover:bg-[#efb958] hover:text-white transition-all duration-300">
+                                    <button className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-white text-[#11353e] rounded-lg font-secondary font-medium hover:bg-[#efb958] hover:text-white transition-all duration-300 text-sm sm:text-base">
                                         Latest
-                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                         </svg>
                                     </button>
                                 </div>
                                 
                                 <div className="relative">
-                                    <button className="flex items-center gap-2 px-4 py-2 bg-white text-[#11353e] rounded-lg font-secondary font-medium hover:bg-[#efb958] hover:text-white transition-all duration-300">
+                                    <button className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-white text-[#11353e] rounded-lg font-secondary font-medium hover:bg-[#efb958] hover:text-white transition-all duration-300 text-sm sm:text-base">
                                         Categories
-                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                         </svg>
                                     </button>
@@ -293,40 +293,40 @@ const BlogDetail = () => {
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-16 lg:gap-20">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
                             {blogPost.relatedPosts.map((post) => (
                                 <Link 
                                     to={`/blog/${post.id}`} 
                                     key={post.id} 
-                                    className="group block rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#efb958] mb-8"
+                                    className="group block rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#efb958]"
                                 >
-                                    <div className="relative">
+                                    <div className="relative overflow-hidden">
                                         <img 
                                             src={post.image} 
                                             alt={post.title} 
-                                            className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+                                            className="w-full h-48 sm:h-56 md:h-64 object-cover group-hover:scale-105 transition-transform duration-300"
                                         />
                                         
                                         {/* Title in white box at the bottom with overlap effect */}
-                                        <div className="absolute w-[70%] mx-auto bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 z-20">
-                                            <div className="w-[100%] bg-white shadow-2xl p-4 md:p-5">
+                                        <div className="absolute w-[85%] sm:w-[80%] lg:w-[75%] mx-auto bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 z-20">
+                                            <div className="w-full bg-white shadow-2xl p-3 sm:p-4 md:p-5">
                                                 {/* Date positioned over the white box in left corner */}
-                                                <div className="absolute -top-10 left-0">
-                                                    <div className="bg-[#efb958] px-3 py-2 shadow-md">
-                                                        <span className="text-[#11353e] font-secondary font-medium text-sm">
+                                                <div className="absolute -top-8 sm:-top-10 left-0">
+                                                    <div className="bg-[#efb958] px-2 sm:px-3 py-1 sm:py-2 shadow-md">
+                                                        <span className="text-[#11353e] font-secondary font-medium text-xs sm:text-sm">
                                                             {post.date}
                                                         </span>
                                                     </div>
                                                 </div>
                                                 
                                                 {/* Title in the white box */}
-                                                <h3 className="text-[#11353e] [font-family:'Libre_Bodoni',serif] font-bold text-base md:text-lg leading-tight mb-3">
+                                                <h3 className="text-[#11353e] [font-family:'Libre_Bodoni',serif] font-bold text-sm sm:text-base md:text-lg leading-tight mb-2 sm:mb-3">
                                                     {post.title}
                                                 </h3>
                                                 
                                                 {/* Learn More button */}
                                                 <div className="text-center">
-                                                    <span className="inline-block px-4 py-2 text-[#efb958] font-secondary font-semibold text-sm hover:text-[#11353e] transition-all duration-300">
+                                                    <span className="inline-block px-3 sm:px-4 py-1 sm:py-2 text-[#efb958] font-secondary font-semibold text-xs sm:text-sm hover:text-[#11353e] transition-all duration-300">
                                                         Learn More
                                                     </span>
                                                 </div>

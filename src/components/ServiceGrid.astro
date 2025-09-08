@@ -1,0 +1,138 @@
+---
+export interface Props {
+  sectionId: string;
+  items: Array<{
+    id: number;
+    name: string;
+    photo: string;
+    address: string;
+    dimensions: string;
+    capacity: number;
+    priceFrom: string;
+  }>;
+  photos: Record<string, string>;
+  detailLink: string;
+  filters: Array<{
+    name: string;
+    options: string[];
+  }>;
+}
+
+const { sectionId, items, photos, detailLink, filters } = Astro.props;
+---
+
+<!-- Service Grid -->
+<section
+  id={sectionId}
+  class="relative pt-24 md:pt-28 lg:pt-32 pb-16 md:pb-20 lg:pb-24"
+  style="background-image: linear-gradient(to right, #11353e, #2a6781), linear-gradient(to bottom, rgba(17,53,62,0.6), rgba(42,103,129,0.2)); background-blend-mode: overlay;"
+>
+  <!-- Floating filter panel overlaps hero and this section ~50/50 -->
+  <div class="absolute left-1/2 -translate-x-1/2 -top-0 -translate-y-1/2 z-30 w-full">
+    <div class="container mx-auto px-4 sm:px-6">
+      <div class="rounded-2xl bg-[#2a6781]/90 shadow-2xl ring-1 ring-white/10 backdrop-blur-md px-4 sm:px-6 py-4 sm:py-5 md:py-6">
+        <form class="flex flex-col gap-3">
+          <div class="flex items-center gap-3 text-white/90 font-secondary text-sm">
+            <span class="whitespace-nowrap">Sort by</span>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 w-full">
+              {filters.map((filter) => (
+                <div class="relative">
+                  <select 
+                    class="w-full appearance-none rounded-md bg-white text-[#11353e] px-3 py-2 text-sm border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
+                  >
+                    <option>{filter.name}</option>
+                    {filter.options.map((option) => (
+                      <option>{option}</option>
+                    ))}
+                  </select>
+                  <svg 
+                    class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#11353e]/70 transition-transform duration-200 w-4 h-4" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              ))}
+              <div class="relative">
+                <svg class="absolute left-3 top-1/2 -translate-y-1/2 text-[#11353e]/60 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <input
+                  class="w-full rounded-md bg-white text-[#11353e] pl-9 pr-3 py-2 text-sm border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
+                  placeholder="Search"
+                />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mx-auto px-4 sm:px-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+      {items.map((item) => (
+        <a href={`${detailLink}/${item.id}`} class="block rounded-2xl overflow-hidden shadow-xl focus:outline-none focus:ring-2 focus:ring-[#efb958]">
+          {/* Image container with dark teal background */}
+          <div class="relative bg-[#11353e]">
+            {/* Gold name ribbon */}
+            <div class="absolute top-4 left-4">
+              <span class="px-4 py-1 rounded-full font-secondary font-bold uppercase text-sm bg-[#efb958] text-[#11353e]">
+                {item.name}
+              </span>
+            </div>
+            <img src={photos[item.photo]} alt={item.name} class="w-full h-48 md:h-56 lg:h-64 object-cover" />
+          </div>
+
+          {/* Details section (white background) */}
+          <div class="bg-white p-5 font-secondary">
+            {/* Row 1: location & dimensions */}
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2 text-[#374151]">
+                <svg class="w-[18px] h-[18px]" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                </svg>
+                <span class="text-sm font-medium">{item.address}</span>
+              </div>
+              <div class="text-[#9CA3AF] text-xs">{item.dimensions}</div>
+            </div>
+
+            {/* Row 2: capacity & price */}
+            <div class="flex items-center justify-between mt-3">
+              <div class="flex items-center gap-2 text-[#374151]">
+                <svg class="w-[18px] h-[18px]" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm4 18v-6h2.5l-2.54-7.63A1.5 1.5 0 0 0 18.54 8H17c-.8 0-1.54.37-2.01.99L14 10.5v1.5h2v6h2zm-6.5-10.5c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5S12 8.17 12 9s.67 1.5 1.5 1.5zM5.5 6c1.11 0 2-.89 2-2s-.89-2-2-2-2 .89-2 2 .89 2 2 2zm2 16v-7H9V9.5C9 8.12 7.88 7 6.5 7S4 8.12 4 9.5V15h1.5v7h2zm6.5 0v-4h1v-4.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5V15h1v4h-4z"/>
+                </svg>
+                <span class="text-sm font-medium">{item.capacity}</span>
+              </div>
+              <div class="text-[#111827] text-base font-semibold">From {item.priceFrom}</div>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+    
+    {/* Pagination right after grid */}
+    <div class="mt-10 md:mt-12 lg:mt-16">
+      <div class="overflow-x-auto">
+        <div class="w-max">
+          {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => (
+            <a
+              href="#"
+              class={`shrink-0 text-[#efb958] border-[#efb958]/50 px-3 py-2 text-sm border rounded-md transition-colors duration-200 ${
+                n === 1 
+                  ? 'bg-[#efb958] text-[#11353e]' 
+                  : 'hover:bg-[#efb958]/10'
+              }`}
+              aria-current={n === 1 ? 'page' : undefined}
+            >
+              {n}
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

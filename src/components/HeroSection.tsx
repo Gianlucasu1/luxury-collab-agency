@@ -45,7 +45,6 @@ const HeroSection = () => {
           {/* Semi-transparent background for text */}
           <div
             className="absolute inset-0 rounded-2xl -m-8"
-            style={{ backgroundColor: '#00000033' }}
           />
           <div className="relative z-10">
           <h1 className="text-5xl md:text-7xl font-primary font-bold text-white mb-6 hero-text fade-in">
@@ -53,7 +52,7 @@ const HeroSection = () => {
             <span className="block text-[#efb958]">Exclusive Experiences</span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-white/90 mb-8 font-secondary font-light max-w-2xl mx-auto fade-in drop-shadow-2xl [text-shadow:_0_4px_12px_rgba(0,0,0,0.9)]">
+          <p className="text-xl md:text-2xl text-white/90 mb-8 font-secondary font-light max-w-2xl mx-auto fade-in">
             Private Jets, Luxury Villas, Exotic Cars – At Your Fingertips
           </p>
           

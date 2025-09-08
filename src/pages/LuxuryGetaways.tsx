@@ -11,12 +11,6 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import whiteLogo from '@/assets/lc_logo.png';
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-} from '@/components/ui/pagination';
 
 const LuxuryGetaways = () => {
   const filters = ['All', 'Motor Yacht', 'Catamaran', 'Sailing Yacht', 'Mega Yacht'];
@@ -82,8 +76,13 @@ const LuxuryGetaways = () => {
       const gridRect = gridRef.current.getBoundingClientRect();
       const docTop = window.scrollY || document.documentElement.scrollTop;
       const gridBottom = docTop + gridRect.top + gridRef.current.offsetHeight;
+      
+      // Find the pagination section to account for its height
+      const paginationSection = gridRef.current.querySelector('.mt-10, .mt-12, .mt-16');
+      const paginationHeight = paginationSection ? paginationSection.getBoundingClientRect().height : 0;
+      
       const faqHeight = faqRef.current.offsetHeight;
-      const top = gridBottom - faqHeight / 2;
+      const top = gridBottom + paginationHeight - faqHeight / 2;
       setFaqTop(top);
       setOverlapHalf(Math.ceil(faqHeight / 2) + 64);
     });
@@ -146,17 +145,17 @@ const LuxuryGetaways = () => {
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${yachtHero})` }} />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, #11353e33, #2a67811a, #11353e59)' }} />
         <div className="relative z-10 h-full flex items-center">
-          <div className="container mx-auto px-4 sm:px-6">
-            <div className="max-w-3xl">
+                  <div className="main-container px-4 sm:px-6">
+          <div className="max-w-3xl">
               <h1
-                className="text-white mt-3 font-semibold [font-family:'Libre_Bodoni',serif] text-[40px] leading-[44px] tracking-[-1px] md:text-[64px] md:leading-[64px] lg:text-[81px] lg:leading-[80px]"
+                className="text-white mt-3 font-semibold [font-family:'Libre_Bodoni',serif] text-[32px] leading-[36px] tracking-[-1px] sm:text-[40px] sm:leading-[44px] md:text-[56px] md:leading-[60px] lg:text-[64px] lg:leading-[68px] xl:text-[72px] xl:leading-[76px] 2xl:text-[81px] 2xl:leading-[80px]"
               >
                 Luxury Getaways
                 <br />
                 <span className="text-[#efb958]">and escapes</span>
               </h1>
               <p
-                className="mt-4 font-secondary font-normal text-white tracking-[-1px] text-[20px] leading-[30px] md:text-[28px] md:leading-[40px] lg:text-[36px] lg:leading-[50px]"
+                className="mt-4 font-secondary font-normal text-white tracking-[-1px] text-[16px] leading-[24px] sm:text-[20px] sm:leading-[30px] md:text-[24px] md:leading-[36px] lg:text-[28px] lg:leading-[42px] xl:text-[32px] xl:leading-[46px] 2xl:text-[36px] 2xl:leading-[50px]"
               >
                 Curated experiences in the
                 <br />
@@ -170,29 +169,19 @@ const LuxuryGetaways = () => {
         </div>
       </section>
 
-      {/* Getaways Grid */}
-      <section
-        ref={gridRef}
-        id="getaways"
-        className="relative py-16 md:py-20 lg:py-24"
-        style={{
-          paddingBottom: isDesktop && overlapHalf ? `${overlapHalf}px` : undefined,
-          backgroundImage:
-            'linear-gradient(to right, #11353e, #2a6781), linear-gradient(to bottom, rgba(17,53,62,0.6), rgba(42,103,129,0.2))',
-          backgroundBlendMode: 'overlay'
-        }}
-      >
-        {/* Floating filter panel overlaps hero and this section ~50/50 */}
-        <div className="absolute left-1/2 -translate-x-1/2 -top-0 -translate-y-1/2 z-30 w-full">
-          <div className="container mx-auto px-4 sm:px-6">
+      {/* Filter Panel - Responsive positioning */}
+      <section className="relative z-30">
+        {/* Mobile: Normal section with proper spacing */}
+        <div className="block lg:hidden pt-8 pb-4">
+          <div className="main-container px-4 sm:px-6">
             <div className="rounded-2xl bg-[#2a6781]/90 shadow-2xl ring-1 ring-white/10 backdrop-blur-md px-4 sm:px-6 py-4 sm:py-5 md:py-6">
               <form className="flex flex-col gap-3">
-                <div className="flex items-center gap-3 text-white/90 font-secondary text-sm">
-                  <span className="whitespace-nowrap">Sort by</span>
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3 text-white/90 font-secondary text-sm">
+                  <span className="whitespace-nowrap text-center sm:text-left">Sort by</span>
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 w-full">
                     <div className="relative">
                       <select 
-                        className="w-full appearance-none rounded-md bg-white text-[#11353e] px-3 py-2 text-sm border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
+                        className="w-full appearance-none rounded-md bg-white text-[#11353e] px-2 py-1.5 text-xs border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
                         onFocus={() => handleSelectFocus('destination')}
                         onBlur={() => handleSelectBlur('destination')}
                         onChange={(e) => handleSelectChange('destination', e)}
@@ -203,15 +192,15 @@ const LuxuryGetaways = () => {
                         <option>Pacific</option>
                       </select>
                       <ChevronDown 
-                        size={16} 
-                        className={`pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#11353e]/70 transition-transform duration-200 ${
+                        size={14} 
+                        className={`pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[#11353e]/70 transition-transform duration-200 ${
                           openSelects.has('destination') ? 'rotate-180' : ''
                         }`} 
                       />
                     </div>
                     <div className="relative">
                       <select 
-                        className="w-full appearance-none rounded-md bg-white text-[#11353e] px-3 py-2 text-sm border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
+                        className="w-full appearance-none rounded-md bg-white text-[#11353e] px-2 py-1.5 text-xs border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
                         onFocus={() => handleSelectFocus('propertyName')}
                         onBlur={() => handleSelectBlur('propertyName')}
                         onChange={(e) => handleSelectChange('propertyName', e)}
@@ -222,15 +211,15 @@ const LuxuryGetaways = () => {
                         <option>Resort Paradise</option>
                       </select>
                       <ChevronDown 
-                        size={16} 
-                        className={`pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#11353e]/70 transition-transform duration-200 ${
+                        size={14} 
+                        className={`pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[#11353e]/70 transition-transform duration-200 ${
                           openSelects.has('propertyName') ? 'rotate-180' : ''
                         }`} 
                       />
                     </div>
                     <div className="relative">
                       <select 
-                        className="w-full appearance-none rounded-md bg-white text-[#11353e] px-3 py-2 text-sm border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
+                        className="w-full appearance-none rounded-md bg-white text-[#11353e] px-2 py-1.5 text-xs border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
                         onFocus={() => handleSelectFocus('propertyType')}
                         onBlur={() => handleSelectBlur('propertyType')}
                         onChange={(e) => handleSelectChange('propertyType', e)}
@@ -242,15 +231,15 @@ const LuxuryGetaways = () => {
                         <option>Chalet</option>
                       </select>
                       <ChevronDown 
-                        size={16} 
-                        className={`pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#11353e]/70 transition-transform duration-200 ${
+                        size={14} 
+                        className={`pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[#11353e]/70 transition-transform duration-200 ${
                           openSelects.has('propertyType') ? 'rotate-180' : ''
                         }`} 
                       />
                     </div>
                     <div className="relative">
                       <select 
-                        className="w-full appearance-none rounded-md bg-white text-[#11353e] px-3 py-2 text-sm border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
+                        className="w-full appearance-none rounded-md bg-white text-[#11353e] px-2 py-1.5 text-xs border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
                         onFocus={() => handleSelectFocus('guests')}
                         onBlur={() => handleSelectBlur('guests')}
                         onChange={(e) => handleSelectChange('guests', e)}
@@ -261,15 +250,15 @@ const LuxuryGetaways = () => {
                         <option>11-14</option>
                       </select>
                       <ChevronDown 
-                        size={16} 
-                        className={`pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#11353e]/70 transition-transform duration-200 ${
+                        size={14} 
+                        className={`pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[#11353e]/70 transition-transform duration-200 ${
                           openSelects.has('guests') ? 'rotate-180' : ''
                         }`} 
                       />
                     </div>
                     <div className="relative">
                       <select 
-                        className="w-full appearance-none rounded-md bg-white text-[#11353e] px-3 py-2 text-sm border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
+                        className="w-full appearance-none rounded-md bg-white text-[#11353e] px-2 py-1.5 text-xs border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
                         onFocus={() => handleSelectFocus('price')}
                         onBlur={() => handleSelectBlur('price')}
                         onChange={(e) => handleSelectChange('price', e)}
@@ -279,16 +268,16 @@ const LuxuryGetaways = () => {
                         <option>High to Low</option>
                       </select>
                       <ChevronDown 
-                        size={16} 
-                        className={`pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#11353e]/70 transition-transform duration-200 ${
+                        size={14} 
+                        className={`pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[#11353e]/70 transition-transform duration-200 ${
                           openSelects.has('price') ? 'rotate-180' : ''
                         }`} 
                       />
                     </div>
                     <div className="relative">
-                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[#11353e]/60" size={16} />
+                      <Search className="absolute left-2 top-1/2 -translate-y-1/2 text-[#11353e]/60" size={14} />
                       <input
-                        className="w-full rounded-md bg-white text-[#11353e] pl-9 pr-3 py-2 text-sm border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
+                        className="w-full rounded-md bg-white text-[#11353e] pl-7 pr-2 py-1.5 text-xs border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
                         placeholder="Search"
                       />
                     </div>
@@ -298,8 +287,139 @@ const LuxuryGetaways = () => {
             </div>
           </div>
         </div>
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        
+        {/* Desktop: Overlapping between hero and content */}
+        <div className="hidden lg:block absolute left-1/2 -translate-x-1/2 -top-0 -translate-y-1/2 w-full">
+          <div className="main-container px-4 sm:px-6">
+            <div className="rounded-2xl bg-[#2a6781]/90 shadow-2xl ring-1 ring-white/10 backdrop-blur-md px-4 sm:px-6 py-4 sm:py-5 md:py-6">
+              <form className="flex flex-col gap-3">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3 text-white/90 font-secondary text-sm">
+                  <span className="whitespace-nowrap text-center sm:text-left">Sort by</span>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 w-full">
+                    <div className="relative">
+                      <select 
+                        className="w-full appearance-none rounded-md bg-white text-[#11353e] px-2 py-1.5 text-xs border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
+                        onFocus={() => handleSelectFocus('destination')}
+                        onBlur={() => handleSelectBlur('destination')}
+                        onChange={(e) => handleSelectChange('destination', e)}
+                      >
+                        <option>Destination</option>
+                        <option>Mediterranean</option>
+                        <option>Caribbean</option>
+                        <option>Pacific</option>
+                      </select>
+                      <ChevronDown 
+                        size={14} 
+                        className={`pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[#11353e]/70 transition-transform duration-200 ${
+                          openSelects.has('destination') ? 'rotate-180' : ''
+                        }`} 
+                      />
+                    </div>
+                    <div className="relative">
+                      <select 
+                        className="w-full appearance-none rounded-md bg-white text-[#11353e] px-2 py-1.5 text-xs border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
+                        onFocus={() => handleSelectFocus('propertyName')}
+                        onBlur={() => handleSelectBlur('propertyName')}
+                        onChange={(e) => handleSelectChange('propertyName', e)}
+                      >
+                        <option>Property Name</option>
+                        <option>Villa Serenity</option>
+                        <option>Chateau Luxe</option>
+                        <option>Resort Paradise</option>
+                      </select>
+                      <ChevronDown 
+                        size={14} 
+                        className={`pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[#11353e]/70 transition-transform duration-200 ${
+                          openSelects.has('propertyName') ? 'rotate-180' : ''
+                        }`} 
+                      />
+                    </div>
+                    <div className="relative">
+                      <select 
+                        className="w-full appearance-none rounded-md bg-white text-[#11353e] px-2 py-1.5 text-xs border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
+                        onFocus={() => handleSelectFocus('propertyType')}
+                        onBlur={() => handleSelectBlur('propertyType')}
+                        onChange={(e) => handleSelectChange('propertyType', e)}
+                      >
+                        <option>Property Type</option>
+                        <option>Villa</option>
+                        <option>Chateau</option>
+                        <option>Resort</option>
+                        <option>Chalet</option>
+                      </select>
+                      <ChevronDown 
+                        size={14} 
+                        className={`pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[#11353e]/70 transition-transform duration-200 ${
+                          openSelects.has('propertyType') ? 'rotate-180' : ''
+                        }`} 
+                      />
+                    </div>
+                    <div className="relative">
+                      <select 
+                        className="w-full appearance-none rounded-md bg-white text-[#11353e] px-2 py-1.5 text-xs border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
+                        onFocus={() => handleSelectFocus('guests')}
+                        onBlur={() => handleSelectBlur('guests')}
+                        onChange={(e) => handleSelectChange('guests', e)}
+                      >
+                        <option>Guests</option>
+                        <option>1-6</option>
+                        <option>7-10</option>
+                        <option>11-14</option>
+                      </select>
+                      <ChevronDown 
+                        size={14} 
+                        className={`pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[#11353e]/70 transition-transform duration-200 ${
+                          openSelects.has('guests') ? 'rotate-180' : ''
+                        }`} 
+                      />
+                    </div>
+                    <div className="relative">
+                      <select 
+                        className="w-full appearance-none rounded-md bg-white text-[#11353e] px-2 py-1.5 text-xs border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
+                        onFocus={() => handleSelectFocus('price')}
+                        onBlur={() => handleSelectBlur('price')}
+                        onChange={(e) => handleSelectChange('price', e)}
+                      >
+                        <option>Price</option>
+                        <option>Low to High</option>
+                        <option>High to Low</option>
+                      </select>
+                      <ChevronDown 
+                        size={14} 
+                        className={`pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[#11353e]/70 transition-transform duration-200 ${
+                          openSelects.has('price') ? 'rotate-180' : ''
+                        }`} 
+                      />
+                    </div>
+                    <div className="relative">
+                      <Search className="absolute left-2 top-1/2 -translate-y-1/2 text-[#11353e]/60" size={14} />
+                      <input
+                        className="w-full rounded-md bg-white text-[#11353e] pl-7 pr-2 py-1.5 text-xs border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
+                        placeholder="Search"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Getaways Grid */}
+      <section
+        ref={gridRef}
+        id="getaways"
+        className="relative pt-8 md:pt-12 lg:pt-20 pb-16 md:pb-20 lg:pb-24"
+        style={{
+          paddingBottom: isDesktop && overlapHalf ? `${overlapHalf}px` : undefined,
+          backgroundImage:
+            'linear-gradient(to right, #11353e, #2a6781), linear-gradient(to bottom, rgba(17,53,62,0.6), rgba(42,103,129,0.2))',
+          backgroundBlendMode: 'overlay'
+        }}
+      >
+        <div className="main-container px-4 sm:px-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
             {yachts.map((y) => (
               <Link to={`/getaway/1`} key={y.id} className="block rounded-2xl overflow-hidden shadow-xl focus:outline-none focus:ring-2 focus:ring-[#efb958]">
                 {/* Image container with dark teal background */}
@@ -314,7 +434,7 @@ const LuxuryGetaways = () => {
                 </div>
 
                 {/* Details section (white background) */}
-                <div className="bg-white p-5 font-secondary">
+                <div className="bg-white p-5 font-secondary min-h-[120px] flex flex-col justify-between">
                   {/* Row 1: location & dimensions */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2 text-[#374151]">
@@ -336,32 +456,14 @@ const LuxuryGetaways = () => {
               </Link>
             ))}
           </div>
-          {/* Pagination right after grid */}
-          <div className="mt-10 md:mt-12 lg:mt-16">
-            <Pagination className="overflow-x-auto">
-              <PaginationContent className="w-max">
-                {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => (
-                  <PaginationItem key={n}>
-                    <PaginationLink
-                      href="#"
-                      className="shrink-0 text-[#efb958] border-[#efb958]/50 data-[state=active]:bg-[#efb958] data-[state=active]:text-[#11353e]"
-                      aria-current={n === 1 ? 'page' : undefined}
-                      data-state={n === 1 ? 'active' : undefined}
-                    >
-                      {n}
-                    </PaginationLink>
-                  </PaginationItem>
-                ))}
-              </PaginationContent>
-            </Pagination>
-          </div>
+          
         </div>
       </section>
 
-      {/* FAQ Section (responsive overlap on desktop) */}
+      {/* FAQ Section - Responsive positioning */}
       <section className={isDesktop ? 'absolute left-0 right-0 z-30' : 'relative z-30 my-10 md:my-12'} style={isDesktop && faqTop !== null ? { top: `${faqTop}px` } : undefined}>
-        <div className="container mx-auto px-4 sm:px-6">
-          <div ref={faqRef} className="relative rounded-2xl px-10 py-8 md:px-16 md:py-12 lg:px-20 lg:py-14 overflow-hidden shadow-2xl ring-1 ring-white/10 backdrop-blur-md">
+        <div className="main-container px-4 sm:px-6">
+          <div ref={faqRef} className="relative rounded-2xl px-6 py-6 sm:px-8 sm:py-8 md:px-12 md:py-10 lg:px-16 lg:py-12 xl:px-20 xl:py-14 overflow-hidden shadow-2xl ring-1 ring-white/10 backdrop-blur-md">
             {/* Background decorative logo */}
             <div className="pointer-events-none select-none absolute inset-0 flex items-center justify-center">
               <img src={whiteLogo} alt="" className="opacity-15 md:opacity-20" style={{ width: 'min(60%, 520px)', height: 'auto' }} />
@@ -372,7 +474,7 @@ const LuxuryGetaways = () => {
 
             <div className="relative z-10 flex items-center gap-3 mb-6 md:mb-8">
               <img src={faqsLogo} alt="FAQs" className="object-contain align-middle w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16" />
-              <h2 className="[font-family:'Libre_Bodoni',serif] font-bold text-[#efb958] text-[40px] leading-[36px] tracking-[-0.01em] md:text-[56px] md:leading-[40px] lg:text-[64px] lg:leading-[39px]">
+              <h2 className="[font-family:'Libre_Bodoni',serif] font-bold text-[#efb958] text-[32px] leading-[28px] tracking-[-0.01em] sm:text-[40px] sm:leading-[36px] md:text-[48px] md:leading-[40px] lg:text-[56px] lg:leading-[44px] xl:text-[64px] xl:leading-[50px]">
                 FAQs
               </h2>
             </div>
@@ -381,14 +483,14 @@ const LuxuryGetaways = () => {
               {faqs.map((f, idx) => (
                 <details key={idx} className="group py-4 md:py-5 border-b border-white/30">
                   <summary className="flex items-center justify-between cursor-pointer list-none gap-4 py-2">
-                    <span className="font-secondary font-normal text-white text-[18px] leading-[32px] md:text-[24px] md:leading-[44px] lg:text-[32px] lg:leading-[59px] tracking-[-0.01em]">
+                    <span className="font-secondary font-normal text-white text-[16px] leading-[28px] sm:text-[18px] sm:leading-[32px] md:text-[20px] md:leading-[36px] lg:text-[22px] lg:leading-[40px] xl:text-[24px] xl:leading-[44px] tracking-[-0.01em]">
                       {f.q}
                     </span>
                     <Plus className="text-white group-open:hidden transition-transform duration-300" size={20} />
                     <Minus className="text-white hidden group-open:block transition-transform duration-300" size={20} />
                   </summary>
                   <div className="overflow-hidden transition-all duration-300 ease-in-out">
-                    <p className="mt-2 md:mt-3 text-white/80 font-secondary text-sm md:text-base transform transition-all duration-300 group-open:translate-y-0 translate-y-[-10px] opacity-0 group-open:opacity-100">
+                    <p className="mt-2 md:mt-3 text-white/80 font-secondary text-sm sm:text-base md:text-lg lg:text-base xl:text-lg transform transition-all duration-300 group-open:translate-y-0 translate-y-[-10px] opacity-0 group-open:opacity-100">
                       {f.a}
                     </p>
                   </div>
@@ -410,11 +512,11 @@ const LuxuryGetaways = () => {
         }}
       >
         <div className="absolute inset-0 bg-black/20" />
-        <div className="relative z-10 container mx-auto px-4 sm:px-6 h-full" style={{ paddingTop: isDesktop && overlapHalf ? `${overlapHalf}px` : undefined }}>
+        <div className="relative z-10 main-container px-4 sm:px-6 h-full" style={{ paddingTop: isDesktop && overlapHalf ? `${overlapHalf}px` : undefined }}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 h-full items-end">
             {/* Left: Title + CTA button */}
             <div className="pb-[20%] sm:pb-[25%] md:pb-[30%] lg:pb-[35%] text-left">
-              <h2 className="text-white [font-family:'Libre_Bodoni',serif] font-bold tracking-[-0.01em] text-[40px] leading-[44px] md:text-[56px] md:leading-[50px] lg:text-[64px] lg:leading-[56px]">
+              <h2 className="text-white [font-family:'Libre_Bodoni',serif] font-bold tracking-[-0.01em] text-[32px] leading-[36px] sm:text-[40px] sm:leading-[44px] md:text-[48px] md:leading-[52px] lg:text-[56px] lg:leading-[60px] xl:text-[64px] xl:leading-[68px]">
                 <span className="block">Start Your</span>
                 <span className="block">Journey</span>
                 <span className="block">Here</span>
@@ -427,7 +529,7 @@ const LuxuryGetaways = () => {
             </div>
             {/* Right: Script text */}
             <div className="pb-[20%] sm:pb-[25%] md:pb-[30%] lg:pb-[35%] text-right">
-              <p className="[font-family:'Sacramento',cursive] font-normal tracking-[-0.01em] text-white text-[36px] leading-[28px] sm:text-[48px] sm:leading-[34px] md:text-[56px] md:leading-[36px] lg:text-[64px] lg:leading-[39px]">
+              <p className="[font-family:'Sacramento',cursive] font-normal tracking-[-0.01em] text-white text-[28px] leading-[22px] sm:text-[36px] sm:leading-[28px] md:text-[44px] md:leading-[32px] lg:text-[52px] lg:leading-[36px] xl:text-[60px] xl:leading-[42px] 2xl:text-[64px] 2xl:leading-[46px]">
                 An
                 <br />
                 unforgettable

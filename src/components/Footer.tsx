@@ -1,6 +1,7 @@
 import { Facebook, Instagram, Twitter, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import logo from '@/assets/white_logo.png';
 import luxuryCollabLogo from '@/assets/white_logo_complete.png';
 
@@ -44,19 +45,19 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="container mx-auto px-6">
+      <div className="main-container mx-auto px-6">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 mb-12">
           {/* First Brand Section */}
           <div className="lg:col-span-1">
-            <div className="mb-6">
+            <div className="mb-6 flex justify-center lg:justify-start">
               <img
                 src={luxuryCollabLogo}
                 alt="The Luxury Collab Agency"
                 className="w-48 h-auto object-contain"
               />
             </div>
-            <p className="text-white font-secondary leading-relaxed mb-6">
+            <p className="text-white font-secondary leading-relaxed mb-6 text-center lg:text-left">
               Connecting elite clients with the world's most exclusive experiences. Where luxury meets perfection.
             </p>
           </div>
@@ -64,7 +65,7 @@ const Footer = () => {
           {/* Links Sections (middle) with separators */}
           <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-12">
             {Object.entries(footerLinks).map(([category, links], idx) => (
-              <div key={category} className={`${idx > 0 ? 'sm:border-l sm:border-white/20 sm:pl-6' : ''} text-center`}>
+              <div key={category} className={`${idx > 0 ? 'sm:border-l sm:border-white/20 sm:pl-6' : ''} text-center lg:text-left`}>
                 <h3 className="text-xl text-[#efb958] font-primary font-semibold mb-6">
                   {category}
                 </h3>
@@ -86,7 +87,7 @@ const Footer = () => {
 
           {/* Last section: Social + Contact Info */}
           <div className="lg:col-span-1">
-            <div className="flex space-x-6 mb-6 justify-start">
+            <div className="flex space-x-6 mb-6 justify-center lg:justify-start">
               {socialLinks.map((social) => {
                 const Icon = social.icon;
                 return (
@@ -101,16 +102,35 @@ const Footer = () => {
                 );
               })}
             </div>
-            <div className="space-y-4">
-              <div className="flex items-start text-white">
+            <div className="space-y-4 text-center lg:text-left">
+              <div className="flex items-start text-white justify-center lg:justify-start">
                 <MapPin className="w-5 h-5 mr-3 text-[#efb958] flex-shrink-0 mt-0.5" />
                 <span className="font-secondary">Location in the US</span>
               </div>
-              <div className="flex items-start text-white">
-                <Mail className="w-5 h-5 mr-3 text-[#efb958] flex-shrink-0 mt-0.5" />
-                <span className="font-secondary text-sm lg:text-base whitespace-nowrap">
-                  contact@theluxurycollabagency.com
-                </span>
+              <div className="flex items-center text-white justify-center lg:justify-start">
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <div className="flex items-center">
+                        <Mail className="w-5 h-5 text-[#efb958] flex-shrink-0 cursor-help hover:text-[#efb958]/80 transition-colors" />
+                        <span className="lg:hidden ml-3 font-secondary text-sm truncate block max-w-full">
+                          contact@<br />theluxurycollabagency.com
+                        </span>
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent side="top" className="bg-[#11353e] text-white border-[#efb958]/20">
+                      <p>contact@theluxurycollabagency.com</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+                <div className="hidden lg:block ml-4">
+                  <a 
+                    href="/contact-us" 
+                    className="premium-cta inline-block text-sm px-4 py-2 rounded-lg font-semibold transition-all duration-300 hover:scale-105"
+                  >
+                    Contact Us
+                  </a>
+                </div>
               </div>              
             </div>
           </div>

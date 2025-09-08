@@ -1,0 +1,78 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+import ServiceHero from '../components/ServiceHero.astro';
+import ServiceGrid from '../components/ServiceGrid.astro';
+import ServiceFAQ from '../components/ServiceFAQ.astro';
+import ServiceCTA from '../components/ServiceCTA.astro';
+import jetHero from '@/assets/jet_hero.png';
+import jet_1 from '@/assets/jet_1.png';
+import jet_2 from '@/assets/jet_2.png';
+import jet_3 from '@/assets/jet_3.png';
+import jetFooterCover from '@/assets/jet_footer_cover.png';
+
+const jetPhotos = {
+  jet_1,
+  jet_2,
+  jet_3,
+};
+
+const jets = [
+  { id: 1, name: 'Astra Elite', photo: 'jet_1', address: 'Teterboro Airport (TEB), NJ', dimensions: 'W 16.0m / L 17.7m', capacity: 7, priceFrom: '$7,800' },
+  { id: 2, name: 'Falcon Spirit', photo: 'jet_2', address: 'Van Nuys Airport (VNY), CA', dimensions: 'W 19.3m / L 20.2m', capacity: 9, priceFrom: '$10,200' },
+  { id: 3, name: 'Gulfstream Nova', photo: 'jet_3', address: 'Miami Opa-Locka (OPF), FL', dimensions: 'W 23.5m / L 26.2m', capacity: 12, priceFrom: '$14,900' },
+  { id: 4, name: 'Aquila LX', photo: 'jet_1', address: 'Farnborough (FAB), UK', dimensions: 'W 18.1m / L 20.5m', capacity: 8, priceFrom: '$9,600' },
+  { id: 5, name: 'Aurora Jet', photo: 'jet_2', address: 'Le Bourget (LBG), FR', dimensions: 'W 20.8m / L 24.4m', capacity: 10, priceFrom: '$11,800' },
+  { id: 6, name: 'Stratos One', photo: 'jet_3', address: 'Dubai Al Maktoum (DWC), UAE', dimensions: 'W 24.1m / L 29.0m', capacity: 13, priceFrom: '$16,500' },
+  { id: 7, name: 'Sky Sovereign', photo: 'jet_1', address: 'Zurich (ZRH), CH', dimensions: 'W 17.2m / L 18.9m', capacity: 7, priceFrom: '$8,100' },
+  { id: 8, name: 'Nimbus X', photo: 'jet_2', address: 'Singapore Seletar (XSP)', dimensions: 'W 19.7m / L 21.6m', capacity: 9, priceFrom: '$10,900' },
+  { id: 9, name: 'Celestial 9', photo: 'jet_3', address: 'Sydney Kingsford (SYD), AU', dimensions: 'W 24.5m / L 29.4m', capacity: 13, priceFrom: '$17,200' },
+];
+
+const faqs = Array.from({ length: 5 }, () => ({
+  q: 'What is the process of chartering a jet with TLCA?',
+  a: 'We start with your route and preferences, curate aircraft options, arrange viewings (virtual or in-person), and handle all logistics from crew to ground transfers.'
+}));
+
+const filters = [
+  { name: 'Destination', options: ['New York', 'Los Angeles', 'Miami'] },
+  { name: 'Jet Name', options: ['Astra Elite', 'Falcon Spirit', 'Gulfstream Nova'] },
+  { name: 'Jet Type', options: ['Light Jet', 'Midsize Jet', 'Heavy Jet', 'Ultra Long Range'] },
+  { name: 'Passengers', options: ['1-6', '7-10', '11-13'] },
+  { name: 'Price', options: ['Low to High', 'High to Low'] }
+];
+---
+
+<Layout title="Private Jets & Aerial Escapes - The Luxury Collab Agency">
+  <Navigation />
+  
+  <ServiceHero 
+    title="Private Jets"
+    subtitle="and Aerial Escapes"
+    description="Curated experiences in the palm of your hands"
+    ctaText="Explore Jets"
+    ctaLink="#jets"
+    backgroundImage={jetHero}
+  />
+  
+  <ServiceGrid 
+    sectionId="jets"
+    items={jets}
+    photos={jetPhotos}
+    detailLink="/jet"
+    filters={filters}
+  />
+  
+  <ServiceFAQ faqs={faqs} />
+  
+  <ServiceCTA 
+    backgroundImage={jetFooterCover}
+    title="Unlock Curated Escapes"
+    ctaText="Contact Us"
+    ctaLink="/contact-us"
+    scriptText="Fly exclusive with us..."
+  />
+  
+  <Footer />
+</Layout>

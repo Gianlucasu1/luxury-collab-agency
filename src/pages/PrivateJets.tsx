@@ -11,12 +11,6 @@ import { Button } from '@/components/ui/button';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import whiteLogo from '@/assets/lc_logo.png';
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-} from '@/components/ui/pagination';
 
 const PrivateJets = () => {
   const filters = ['All', 'Light Jet', 'Midsize Jet', 'Heavy Jet', 'Ultra Long Range'];
@@ -79,8 +73,12 @@ const PrivateJets = () => {
       const gridRect = gridRef.current.getBoundingClientRect();
       const docTop = window.scrollY || document.documentElement.scrollTop;
       const gridBottom = docTop + gridRect.top + gridRef.current.offsetHeight;
+      
+      // Add some space for the pagination section (approximately 80px)
+      const paginationSpace = 80;
+      
       const faqHeight = faqRef.current.offsetHeight;
-      const top = gridBottom - faqHeight / 2;
+      const top = gridBottom + paginationSpace - faqHeight / 2;
       setFaqTop(top);
       setOverlapHalf(Math.ceil(faqHeight / 2) + 64);
     });
@@ -139,14 +137,14 @@ const PrivateJets = () => {
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${jetHero})` }} />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, #11353e33, #2a67811a, #11353e59)' }} />
         <div className="relative z-10 h-full flex items-center">
-          <div className="container mx-auto px-4 sm:px-6">
-            <div className="max-w-3xl">
-              <h1 className="text-white mt-3 font-semibold [font-family:'Libre_Bodoni',serif] text-[40px] leading-[44px] tracking-[-1px] md:text-[64px] md:leading-[64px] lg:text-[81px] lg:leading-[80px]">
+                  <div className="main-container px-4 sm:px-6">
+          <div className="max-w-3xl">
+              <h1 className="text-white mt-3 font-semibold [font-family:'Libre_Bodoni',serif] text-[32px] leading-[36px] tracking-[-1px] sm:text-[40px] sm:leading-[44px] md:text-[56px] md:leading-[60px] lg:text-[64px] lg:leading-[68px] xl:text-[72px] xl:leading-[76px] 2xl:text-[81px] 2xl:leading-[80px]">
                 Private Jets
                 <br />
                 <span className="text-[#efb958]">and Aerial Escapes</span>
               </h1>
-              <p className="mt-4 font-secondary font-normal text-white tracking-[-1px] text-[20px] leading-[30px] md:text-[28px] md:leading-[40px] lg:text-[36px] lg:leading-[50px]">
+              <p className="mt-4 font-secondary font-normal text-white tracking-[-1px] text-[16px] leading-[24px] sm:text-[20px] sm:leading-[30px] md:text-[24px] md:leading-[36px] lg:text-[28px] lg:leading-[42px] xl:text-[32px] xl:leading-[46px] 2xl:text-[36px] 2xl:leading-[50px]">
                 Curated experiences in the
                 <br />
                 palm of your hands
@@ -159,29 +157,19 @@ const PrivateJets = () => {
         </div>
       </section>
 
-      {/* Jets Grid */}
-      <section
-        ref={gridRef}
-        id="jets"
-        className="relative py-16 md:py-20 lg:py-24"
-        style={{
-          paddingBottom: isDesktop && overlapHalf ? `${overlapHalf}px` : undefined,
-          backgroundImage:
-            'linear-gradient(to right, #11353e, #2a6781), linear-gradient(to bottom, rgba(17,53,62,0.6), rgba(42,103,129,0.2))',
-          backgroundBlendMode: 'overlay'
-        }}
-      >
-        {/* Floating filter panel overlaps hero and this section ~50/50 */}
-        <div className="absolute left-1/2 -translate-x-1/2 -top-0 -translate-y-1/2 z-30 w-full">
-          <div className="container mx-auto px-4 sm:px-6">
+      {/* Filter Panel - Responsive positioning */}
+      <section className="relative z-30">
+        {/* Mobile: Normal section with proper spacing */}
+        <div className="block lg:hidden pt-8 pb-4">
+          <div className="main-container px-4 sm:px-6">
             <div className="rounded-2xl bg-[#2a6781]/90 shadow-2xl ring-1 ring-white/10 backdrop-blur-md px-4 sm:px-6 py-4 sm:py-5 md:py-6">
               <form className="flex flex-col gap-3">
-                <div className="flex items-center gap-3 text-white/90 font-secondary text-sm">
-                  <span className="whitespace-nowrap">Sort by</span>
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3 text-white/90 font-secondary text-sm">
+                  <span className="whitespace-nowrap text-center sm:text-left">Sort by</span>
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 w-full">
                     <div className="relative">
                       <select 
-                        className="w-full appearance-none rounded-md bg-white text-[#11353e] px-3 py-2 text-sm border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
+                        className="w-full appearance-none rounded-md bg-white text-[#11353e] px-2 py-1.5 text-xs border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
                         onFocus={() => handleSelectFocus('destination')}
                         onBlur={() => handleSelectBlur('destination')}
                         onChange={(e) => handleSelectChange('destination', e)}
@@ -192,15 +180,15 @@ const PrivateJets = () => {
                         <option>Miami</option>
                       </select>
                       <ChevronDown 
-                        size={16} 
-                        className={`pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#11353e]/70 transition-transform duration-200 ${
+                        size={14} 
+                        className={`pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[#11353e]/70 transition-transform duration-200 ${
                           openSelects.has('destination') ? 'rotate-180' : ''
                         }`} 
                       />
                     </div>
                     <div className="relative">
                       <select 
-                        className="w-full appearance-none rounded-md bg-white text-[#11353e] px-3 py-2 text-sm border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
+                        className="w-full appearance-none rounded-md bg-white text-[#11353e] px-2 py-1.5 text-xs border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
                         onFocus={() => handleSelectFocus('jetName')}
                         onBlur={() => handleSelectBlur('jetName')}
                         onChange={(e) => handleSelectChange('jetName', e)}
@@ -211,15 +199,15 @@ const PrivateJets = () => {
                         <option>Gulfstream Nova</option>
                       </select>
                       <ChevronDown 
-                        size={16} 
-                        className={`pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#11353e]/70 transition-transform duration-200 ${
+                        size={14} 
+                        className={`pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[#11353e]/70 transition-transform duration-200 ${
                           openSelects.has('jetName') ? 'rotate-180' : ''
                         }`} 
                       />
                     </div>
                     <div className="relative">
                       <select 
-                        className="w-full appearance-none rounded-md bg-white text-[#11353e] px-3 py-2 text-sm border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
+                        className="w-full appearance-none rounded-md bg-white text-[#11353e] px-2 py-1.5 text-xs border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
                         onFocus={() => handleSelectFocus('jetType')}
                         onBlur={() => handleSelectBlur('jetType')}
                         onChange={(e) => handleSelectChange('jetType', e)}
@@ -231,15 +219,15 @@ const PrivateJets = () => {
                         <option>Ultra Long Range</option>
                       </select>
                       <ChevronDown 
-                        size={16} 
-                        className={`pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#11353e]/70 transition-transform duration-200 ${
+                        size={14} 
+                        className={`pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[#11353e]/70 transition-transform duration-200 ${
                           openSelects.has('jetType') ? 'rotate-180' : ''
                         }`} 
                       />
                     </div>
                     <div className="relative">
                       <select 
-                        className="w-full appearance-none rounded-md bg-white text-[#11353e] px-3 py-2 text-sm border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
+                        className="w-full appearance-none rounded-md bg-white text-[#11353e] px-2 py-1.5 text-xs border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
                         onFocus={() => handleSelectFocus('passengers')}
                         onBlur={() => handleSelectBlur('passengers')}
                         onChange={(e) => handleSelectChange('passengers', e)}
@@ -250,15 +238,15 @@ const PrivateJets = () => {
                         <option>11-13</option>
                       </select>
                       <ChevronDown 
-                        size={16} 
-                        className={`pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#11353e]/70 transition-transform duration-200 ${
+                        size={14} 
+                        className={`pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[#11353e]/70 transition-transform duration-200 ${
                           openSelects.has('passengers') ? 'rotate-180' : ''
                         }`} 
                       />
                     </div>
                     <div className="relative">
                       <select 
-                        className="w-full appearance-none rounded-md bg-white text-[#11353e] px-3 py-2 text-sm border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
+                        className="w-full appearance-none rounded-md bg-white text-[#11353e] px-2 py-1.5 text-xs border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
                         onFocus={() => handleSelectFocus('price')}
                         onBlur={() => handleSelectBlur('price')}
                         onChange={(e) => handleSelectChange('price', e)}
@@ -268,16 +256,16 @@ const PrivateJets = () => {
                         <option>High to Low</option>
                       </select>
                       <ChevronDown 
-                        size={16} 
-                        className={`pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#11353e]/70 transition-transform duration-200 ${
+                        size={14} 
+                        className={`pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[#11353e]/70 transition-transform duration-200 ${
                           openSelects.has('price') ? 'rotate-180' : ''
                         }`} 
                       />
                     </div>
                     <div className="relative">
-                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[#11353e]/60" size={16} />
+                      <Search className="absolute left-2 top-1/2 -translate-y-1/2 text-[#11353e]/60" size={14} />
                       <input
-                        className="w-full rounded-md bg-white text-[#11353e] pl-9 pr-3 py-2 text-sm border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
+                        className="w-full rounded-md bg-white text-[#11353e] pl-7 pr-2 py-1.5 text-xs border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
                         placeholder="Search"
                       />
                     </div>
@@ -287,19 +275,154 @@ const PrivateJets = () => {
             </div>
           </div>
         </div>
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        
+        {/* Desktop: Overlapping between hero and content */}
+        <div className="hidden lg:block absolute left-1/2 -translate-x-1/2 -top-0 -translate-y-1/2 w-full">
+          <div className="main-container px-4 sm:px-6">
+            <div className="rounded-2xl bg-[#2a6781]/90 shadow-2xl ring-1 ring-white/10 backdrop-blur-md px-4 sm:px-6 py-4 sm:py-5 md:py-6">
+              <form className="flex flex-col gap-3">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3 text-white/90 font-secondary text-sm">
+                  <span className="whitespace-nowrap text-center sm:text-left">Sort by</span>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 w-full">
+                    <div className="relative">
+                      <select 
+                        className="w-full appearance-none rounded-md bg-white text-[#11353e] px-2 py-1.5 text-xs border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
+                        onFocus={() => handleSelectFocus('destination')}
+                        onBlur={() => handleSelectBlur('destination')}
+                        onChange={(e) => handleSelectChange('destination', e)}
+                      >
+                        <option>Destination</option>
+                        <option>New York</option>
+                        <option>Los Angeles</option>
+                        <option>Miami</option>
+                      </select>
+                      <ChevronDown 
+                        size={14} 
+                        className={`pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[#11353e]/70 transition-transform duration-200 ${
+                          openSelects.has('destination') ? 'rotate-180' : ''
+                        }`} 
+                      />
+                    </div>
+                    <div className="relative">
+                      <select 
+                        className="w-full appearance-none rounded-md bg-white text-[#11353e] px-2 py-1.5 text-xs border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
+                        onFocus={() => handleSelectFocus('jetName')}
+                        onBlur={() => handleSelectBlur('jetName')}
+                        onChange={(e) => handleSelectChange('jetName', e)}
+                      >
+                        <option>Jet Name</option>
+                        <option>Astra Elite</option>
+                        <option>Falcon Spirit</option>
+                        <option>Gulfstream Nova</option>
+                      </select>
+                      <ChevronDown 
+                        size={14} 
+                        className={`pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[#11353e]/70 transition-transform duration-200 ${
+                          openSelects.has('jetName') ? 'rotate-180' : ''
+                        }`} 
+                      />
+                    </div>
+                    <div className="relative">
+                      <select 
+                        className="w-full appearance-none rounded-md bg-white text-[#11353e] px-2 py-1.5 text-xs border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
+                        onFocus={() => handleSelectFocus('jetType')}
+                        onBlur={() => handleSelectBlur('jetType')}
+                        onChange={(e) => handleSelectChange('jetType', e)}
+                      >
+                        <option>Jet Type</option>
+                        <option>Light Jet</option>
+                        <option>Midsize Jet</option>
+                        <option>Heavy Jet</option>
+                        <option>Ultra Long Range</option>
+                      </select>
+                      <ChevronDown 
+                        size={14} 
+                        className={`pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[#11353e]/70 transition-transform duration-200 ${
+                          openSelects.has('jetType') ? 'rotate-180' : ''
+                        }`} 
+                      />
+                    </div>
+                    <div className="relative">
+                      <select 
+                        className="w-full appearance-none rounded-md bg-white text-[#11353e] px-2 py-1.5 text-xs border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
+                        onFocus={() => handleSelectFocus('passengers')}
+                        onBlur={() => handleSelectBlur('passengers')}
+                        onChange={(e) => handleSelectChange('passengers', e)}
+                      >
+                        <option>Passengers</option>
+                        <option>1-6</option>
+                        <option>7-10</option>
+                        <option>11-13</option>
+                      </select>
+                      <ChevronDown 
+                        size={14} 
+                        className={`pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[#11353e]/70 transition-transform duration-200 ${
+                          openSelects.has('passengers') ? 'rotate-180' : ''
+                        }`} 
+                      />
+                    </div>
+                    <div className="relative">
+                      <select 
+                        className="w-full appearance-none rounded-md bg-white text-[#11353e] px-2 py-1.5 text-xs border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
+                        onFocus={() => handleSelectFocus('price')}
+                        onBlur={() => handleSelectBlur('price')}
+                        onChange={(e) => handleSelectChange('price', e)}
+                      >
+                        <option>Price</option>
+                        <option>Low to High</option>
+                        <option>High to Low</option>
+                      </select>
+                      <ChevronDown 
+                        size={14} 
+                        className={`pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[#11353e]/70 transition-transform duration-200 ${
+                          openSelects.has('price') ? 'rotate-180' : ''
+                        }`} 
+                      />
+                    </div>
+                    <div className="relative">
+                      <Search className="absolute left-2 top-1/2 -translate-y-1/2 text-[#11353e]/60" size={14} />
+                      <input
+                        className="w-full rounded-md bg-white text-[#11353e] pl-7 pr-2 py-1.5 text-xs border border-white/60 outline-none focus:ring-2 focus:ring-[#efb958] shadow-md"
+                        placeholder="Search"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Jets Grid */}
+      <section
+        ref={gridRef}
+        id="jets"
+        className="relative pt-8 md:pt-12 lg:pt-20 pb-16 md:pb-20 lg:pb-24"
+        style={{
+          backgroundImage:
+            'linear-gradient(to right, #11353e, #2a6781), linear-gradient(to bottom, rgba(17,53,62,0.6), rgba(42,103,129,0.2))',
+          backgroundBlendMode: 'overlay'
+        }}
+      >
+        <div className="main-container px-4 sm:px-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
             {jets.map((j) => (
               <Link to={`/jet/${j.id}`} key={j.id} className="block rounded-2xl overflow-hidden shadow-xl focus:outline-none focus:ring-2 focus:ring-[#efb958]">
+                {/* Image container with dark teal background */}
                 <div className="relative bg-[#11353e]">
+                  {/* Gold name ribbon */}
                   <div className="absolute top-4 left-4">
                     <span className="px-4 py-1 rounded-full font-secondary font-bold uppercase text-sm bg-[#efb958] text-[#11353e]">
                       {j.name}
                     </span>
                   </div>
-                  <img src={jetPhotos[j.photo]} alt={j.name} className="w-full h-56 object-cover" />
+                  <img src={jetPhotos[j.photo]} alt={j.name} className="w-full h-48 md:h-56 lg:h-64 object-cover" />
                 </div>
-                <div className="bg-white p-5 font-secondary">
+
+                {/* Details section (white background) */}
+                <div className="bg-white p-5 font-secondary min-h-[120px] flex flex-col justify-between">
+                  {/* Row 1: location & dimensions */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2 text-[#374151]">
                       <MapPin size={18} />
@@ -307,6 +430,8 @@ const PrivateJets = () => {
                     </div>
                     <div className="text-[#9CA3AF] text-xs">{j.dimensions}</div>
                   </div>
+
+                  {/* Row 2: capacity & price */}
                   <div className="flex items-center justify-between mt-3">
                     <div className="flex items-center gap-2 text-[#374151]">
                       <UsersIcon size={18} />
@@ -318,31 +443,15 @@ const PrivateJets = () => {
               </Link>
             ))}
           </div>
-          <div className="mt-10 md:mt-12 lg:mt-16">
-            <Pagination className="overflow-x-auto">
-              <PaginationContent className="w-max">
-                {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => (
-                  <PaginationItem key={n}>
-                    <PaginationLink
-                      href="#"
-                      className="shrink-0 text-[#efb958] border-[#efb958]/50 data-[state=active]:bg-[#efb958] data-[state=active]:text-[#11353e]"
-                      aria-current={n === 1 ? 'page' : undefined}
-                      data-state={n === 1 ? 'active' : undefined}
-                    >
-                      {n}
-                    </PaginationLink>
-                  </PaginationItem>
-                ))}
-              </PaginationContent>
-            </Pagination>
-          </div>
+          
         </div>
       </section>
 
-      {/* FAQ Section */}
+
+      {/* FAQ Section - Responsive positioning */}
       <section className={isDesktop ? 'absolute left-0 right-0 z-30' : 'relative z-30 my-10 md:my-12'} style={isDesktop && faqTop !== null ? { top: `${faqTop}px` } : undefined}>
-        <div className="container mx-auto px-4 sm:px-6">
-          <div ref={faqRef} className="relative rounded-2xl px-10 py-8 md:px-16 md:py-12 lg:px-20 lg:py-14 overflow-hidden shadow-2xl ring-1 ring-white/10 backdrop-blur-md">
+        <div className="main-container px-4 sm:px-6">
+          <div ref={faqRef} className="relative rounded-2xl px-6 py-6 sm:px-8 sm:py-8 md:px-12 md:py-10 lg:px-16 lg:py-12 xl:px-20 xl:py-14 overflow-hidden shadow-2xl ring-1 ring-white/10 backdrop-blur-md">
             <div className="pointer-events-none select-none absolute inset-0 flex items-center justify-center">
               <img src={whiteLogo} alt="" className="opacity-15 md:opacity-20" style={{ width: 'min(60%, 520px)', height: 'auto' }} />
             </div>
@@ -351,7 +460,7 @@ const PrivateJets = () => {
 
             <div className="relative z-10 flex items-center gap-3 mb-6 md:mb-8">
               <img src={faqsLogo} alt="FAQs" className="object-contain align-middle w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16" />
-              <h2 className="[font-family:'Libre_Bodoni',serif] font-bold text-[#efb958] text-[40px] leading-[36px] tracking-[-0.01em] md:text-[56px] md:leading-[40px] lg:text-[64px] lg:leading-[39px]">
+              <h2 className="[font-family:'Libre_Bodoni',serif] font-bold text-[#efb958] text-[32px] leading-[28px] tracking-[-0.01em] sm:text-[40px] sm:leading-[36px] md:text-[48px] md:leading-[40px] lg:text-[56px] lg:leading-[44px] xl:text-[64px] xl:leading-[50px]">
                 FAQs
               </h2>
             </div>
@@ -360,14 +469,14 @@ const PrivateJets = () => {
               {faqs.map((f, idx) => (
                 <details key={idx} className="group py-4 md:py-5 border-b border-white/30">
                   <summary className="flex items-center justify-between cursor-pointer list-none gap-4 py-2">
-                    <span className="font-secondary font-normal text-white text-[18px] leading-[32px] md:text-[24px] md:leading-[44px] lg:text-[32px] lg:leading-[59px] tracking-[-0.01em]">
+                    <span className="font-secondary font-normal text-white text-[16px] leading-[28px] sm:text-[18px] sm:leading-[32px] md:text-[20px] md:leading-[36px] lg:text-[22px] lg:leading-[40px] xl:text-[24px] xl:leading-[44px] tracking-[-0.01em]">
                       {f.q}
                     </span>
                     <Plus className="text-white group-open:hidden transition-transform duration-300" size={20} />
                     <Minus className="text-white hidden group-open:block transition-transform duration-300" size={20} />
                   </summary>
                   <div className="overflow-hidden transition-all duration-300 ease-in-out">
-                    <p className="mt-2 md:mt-3 text-white/80 font-secondary text-sm md:text-base transform transition-all duration-300 group-open:translate-y-0 translate-y-[-10px] opacity-0 group-open:opacity-100">
+                    <p className="mt-2 md:mt-3 text-white/80 font-secondary text-sm sm:text-base md:text-lg lg:text-base xl:text-lg transform transition-all duration-300 group-open:translate-y-0 translate-y-[-10px] opacity-0 group-open:opacity-100">
                       {f.a}
                     </p>
                   </div>
@@ -389,10 +498,10 @@ const PrivateJets = () => {
         }}
       >
         <div className="absolute inset-0 bg-black/20" />
-        <div className="relative z-10 container mx-auto px-4 sm:px-6 h-full" style={{ paddingTop: isDesktop && overlapHalf ? `${overlapHalf}px` : undefined }}>
+        <div className="relative z-10 main-container px-4 sm:px-6 h-full" style={{ paddingTop: isDesktop && overlapHalf ? `${overlapHalf}px` : undefined }}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 h-full items-end">
             <div className="pb-[20%] sm:pb-[25%] md:pb-[30%] lg:pb-[35%] text-left">
-              <h2 className="text-white [font-family:'Libre_Bodoni',serif] font-bold tracking-[-0.01em] text-[40px] leading-[44px] md:text-[56px] md:leading-[50px] lg:text-[64px] lg:leading-[56px]">
+              <h2 className="text-white [font-family:'Libre_Bodoni',serif] font-bold tracking-[-0.01em] text-[32px] leading-[36px] sm:text-[40px] sm:leading-[44px] md:text-[48px] md:leading-[52px] lg:text-[56px] lg:leading-[60px] xl:text-[64px] xl:leading-[68px]">
                 <span className="block">Unlock Curated</span>
                 <span className="block">Esapes</span>
               </h2>
@@ -403,7 +512,7 @@ const PrivateJets = () => {
               </div>
             </div>
             <div className="pb-[20%] sm:pb-[25%] md:pb-[30%] lg:pb-[35%] text-right">
-              <p className="[font-family:'Sacramento',cursive] font-normal tracking-[-0.01em] text-white text-[36px] leading-[28px] sm:text-[48px] sm:leading-[34px] md:text-[56px] md:leading-[36px] lg:text-[64px] lg:leading-[39px]">
+              <p className="[font-family:'Sacramento',cursive] font-normal tracking-[-0.01em] text-white text-[28px] leading-[22px] sm:text-[36px] sm:leading-[28px] md:text-[44px] md:leading-[32px] lg:text-[52px] lg:leading-[36px] xl:text-[60px] xl:leading-[42px] 2xl:text-[64px] 2xl:leading-[46px]">
                 Fly exclusive
                 <br />
                 with us...

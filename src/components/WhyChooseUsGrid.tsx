@@ -58,7 +58,7 @@ const WhyChooseUsGrid = () => {
           <h2 className="text-4xl md:text-5xl font-primary font-bold text-brand-fifth mb-6">
             Why <span className="text-brand-tertiary">Elite</span> Clients Choose Us
           </h2>
-          <p className="text-xl text-brand-quaternary font-secondary max-w-2xl mx-auto">
+          <p className="text-xl text-white font-secondary max-w-2xl mx-auto">
             Experience the pinnacle of luxury with our unparalleled service standards
           </p>
         </div>
@@ -77,7 +77,7 @@ const WhyChooseUsGrid = () => {
                 <h3 className="text-xl font-primary font-semibold text-brand-fifth mb-4 text-center">
                   {feature.title}
                 </h3>
-                <p className="text-brand-quaternary font-secondary text-center leading-relaxed">
+                <p className="text-white font-secondary text-center leading-relaxed">
                   {feature.description}
                 </p>
               </div>

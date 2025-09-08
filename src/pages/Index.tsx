@@ -3,6 +3,7 @@ import HeroSection from '@/components/HeroSection';
 import WhyChooseUs from '@/components/WhyChooseUs';
 import WhyChooseUsGrid from '@/components/WhyChooseUsGrid';
 import OurOfferings from '@/components/OurOfferings';
+import VideoSection from '@/components/VideoSection';
 import TestimonialSection from '@/components/TestimonialSection';
 import PartnersSection from '@/components/PartnersSection';
 import PartnersGrid from '@/components/PartnersGrid';
@@ -19,6 +20,8 @@ const Index = () => {
       <Navigation />
       <HeroSection />
       <OurOfferings />
+      <VideoSection />
+      <WhyChooseUs />
       {/*
       <WhyChooseUsLight />
       {/*
@@ -31,7 +34,7 @@ const Index = () => {
       <PartnersGrid />
       {/* Contact Section */}
       <section
-        className="relative overflow-hidden py-20 md:py-28 lg:py-36"
+        className="relative overflow-hidden py-20 sm:py-22 md:py-28 lg:py-36"
         style={{
           backgroundImage: `url(${yachtFooterCover})`,
           backgroundRepeat: 'no-repeat',
@@ -40,31 +43,23 @@ const Index = () => {
         }}
       >
         <div className="absolute inset-0 bg-black/60" />
-        <div className="relative z-10 container mx-auto px-6">
-          <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div className="relative z-10 main-container mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Left: Heading */}
-            <div>
-              <img src={yachtVector} alt="" className="w-36 h-auto mb-4" />
+            <div className="text-center lg:text-left">
+              <img src={yachtVector} alt="" className="w-24 sm:w-32 lg:w-36 h-auto mb-4 mx-auto lg:mx-0" />
               <div
-                className="text-white"
+                className="text-white font-primary font-bold tracking-[-0.01em] text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight sm:leading-[1.1] md:leading-[1.1] lg:leading-[1.1]"
                 style={{
                   fontFamily: 'Libre Bodoni, serif',
-                  fontWeight: 700,
-                  fontSize: '64px',
-                  lineHeight: '80px',
-                  letterSpacing: '-0.01em',
                 }}
               >
                 Have Questions?
               </div>
               <div
-                className="text-[#efb958] -mt-1"
+                className="text-[#efb958] -mt-1 font-primary font-bold tracking-[-0.01em] text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight sm:leading-[1.1] md:leading-[1.1] lg:leading-[1.1]"
                 style={{
                   fontFamily: 'Libre Bodoni, serif',
-                  fontWeight: 700,
-                  fontSize: '64px',
-                  lineHeight: '80px',
-                  letterSpacing: '-0.01em',
                 }}
               >
                 Get in Touch
@@ -72,40 +67,40 @@ const Index = () => {
             </div>
 
             {/* Right: Contact Form */}
-            <div className="p-6 md:p-8">
-              <form onSubmit={(e) => e.preventDefault()} className="space-y-5">
+            <div className="p-4 sm:p-6 lg:p-8">
+              <form onSubmit={(e) => e.preventDefault()} className="space-y-4 sm:space-y-5">
                 <div>
-                  <label htmlFor="fullname" className="block text-sm font-medium text-white mb-2">
+                  <label htmlFor="fullname" className="block text-sm sm:text-base font-medium text-white mb-2">
                     Full Name
                   </label>
                   <input
                     id="fullname"
                     type="text"
-                    className="w-full rounded-lg border border-white/30 bg-white/90 backdrop-blur-sm px-4 py-2.5 outline-none focus:ring-2 focus:ring-[#efb958] text-[#11353e] placeholder:text-gray-500"
+                    className="w-full rounded-lg border border-white/30 bg-white/90 backdrop-blur-sm px-3 sm:px-4 py-2 sm:py-2.5 outline-none focus:ring-2 focus:ring-[#efb958] text-[#11353e] placeholder:text-gray-500 text-sm sm:text-base"
                     placeholder="Enter your full name"
                     required
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-white mb-2">
+                  <label htmlFor="email" className="block text-sm sm:text-base font-medium text-white mb-2">
                     Email
                   </label>
                   <input
                     id="email"
                     type="email"
-                    className="w-full rounded-lg border border-white/30 bg-white/90 backdrop-blur-sm px-4 py-2.5 outline-none focus:ring-2 focus:ring-[#efb958] text-[#11353e] placeholder:text-gray-500"
+                    className="w-full rounded-lg border border-white/30 bg-white/90 backdrop-blur-sm px-3 sm:px-4 py-2 sm:py-2.5 outline-none focus:ring-2 focus:ring-[#efb958] text-[#11353e] placeholder:text-gray-500 text-sm sm:text-base"
                     placeholder="you@example.com"
                     required
                   />
                 </div>
                 <div>
-                  <label htmlFor="details" className="block text-sm font-medium text-white mb-2">
+                  <label htmlFor="details" className="block text-sm sm:text-base font-medium text-white mb-2">
                     Request Details
                   </label>
                   <textarea
                     id="details"
-                    rows={5}
-                    className="w-full rounded-lg border border-white/30 bg-white/90 backdrop-blur-sm px-4 py-2.5 outline-none focus:ring-2 focus:ring-[#efb958] text-[#11353e] placeholder:text-gray-500"
+                    rows={4}
+                    className="w-full rounded-lg border border-white/30 bg-white/90 backdrop-blur-sm px-3 sm:px-4 py-2 sm:py-2.5 outline-none focus:ring-2 focus:ring-[#efb958] text-[#11353e] placeholder:text-gray-500 text-sm sm:text-base resize-none"
                     placeholder="Tell us about your ideal itinerary, dates, and preferences"
                     required
                   />
@@ -113,7 +108,7 @@ const Index = () => {
                 <div>
                   <button
                     type="submit"
-                    className="premium-cta inline-block w-full px-7 py-3"
+                    className="premium-cta inline-block w-full px-6 sm:px-7 py-3 text-sm sm:text-base"
                   >
                     Submit
                   </button>

@@ -1,0 +1,92 @@
+---
+import faqsLogo from '@/assets/ank.png';
+import whiteLogo from '@/assets/lc_logo.png';
+
+export interface Props {
+  faqs: Array<{
+    q: string;
+    a: string;
+  }>;
+  backgroundImage: string;
+  title: string;
+  ctaText: string;
+  ctaLink: string;
+  scriptText: string;
+}
+
+const { faqs, backgroundImage, title, ctaText, ctaLink, scriptText } = Astro.props;
+---
+
+<!-- FAQ Section (absolutely positioned, overlapping grid and CTA) -->
+<section class="relative z-30 my-10 md:my-12">
+  <div class="container mx-auto px-4 sm:px-6">
+    <div class="relative rounded-2xl px-10 py-8 md:px-16 md:py-12 lg:px-20 lg:py-14 overflow-hidden shadow-2xl ring-1 ring-white/10 backdrop-blur-md">
+      {/* Background decorative logo */}
+      <div class="pointer-events-none select-none absolute inset-0 flex items-center justify-center">
+        <img src={whiteLogo} alt="" class="opacity-15 md:opacity-20" style="width: min(60%, 520px); height: auto;" />
+      </div>
+      {/* Overlay gradients to improve readability */}
+      <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(180deg, rgba(17,53,62,0.88) 0%, rgba(42,103,129,0.85) 100%);"></div>
+      <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse at center, rgba(0,0,0,0) 40%, rgba(0,0,0,0.25) 100%);"></div>
+
+      <div class="relative z-10 flex items-center gap-3 mb-6 md:mb-8">
+        <img src={faqsLogo} alt="FAQs" class="object-contain align-middle w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16" />
+        <h2 class="[font-family:'Libre_Bodoni',serif] font-bold text-[#efb958] text-[40px] leading-[36px] tracking-[-0.01em] md:text-[56px] md:leading-[40px] lg:text-[64px] lg:leading-[39px]">
+          FAQs
+        </h2>
+      </div>
+
+      <div class="relative z-10">
+        {faqs.map((f, idx) => (
+          <details class="group py-4 md:py-5 border-b border-white/30">
+            <summary class="flex items-center justify-between cursor-pointer list-none gap-4 py-2">
+              <span class="font-secondary font-normal text-white text-[18px] leading-[32px] md:text-[24px] md:leading-[44px] lg:text-[32px] lg:leading-[59px] tracking-[-0.01em]">
+                {f.q}
+              </span>
+              <svg class="text-white group-open:hidden transition-transform duration-300 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+              </svg>
+              <svg class="text-white hidden group-open:block transition-transform duration-300 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </summary>
+            <div class="overflow-hidden transition-all duration-300 ease-in-out">
+              <p class="mt-2 md:mt-3 text-white/80 font-secondary text-sm md:text-base transform transition-all duration-300 group-open:translate-y-0 translate-y-[-10px] opacity-0 group-open:opacity-100">
+                {f.a}
+              </p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section
+  class="relative overflow-hidden w-full h-[460px] sm:h-[560px] md:h-[760px] lg:h-[960px]"
+  style={`background-image: url(${backgroundImage}); background-repeat: no-repeat; background-position: center; background-size: cover;`}
+>
+  <div class="absolute inset-0 bg-black/20"></div>
+  <div class="relative z-10 container mx-auto px-4 sm:px-6 h-full">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 h-full items-end">
+      {/* Left: Title + CTA button */}
+      <div class="pb-[20%] sm:pb-[25%] md:pb-[30%] lg:pb-[35%] text-left">
+        <h2 class="text-white [font-family:'Libre_Bodoni',serif] font-bold tracking-[-0.01em] text-[40px] leading-[44px] md:text-[56px] md:leading-[50px] lg:text-[64px] lg:leading-[56px]">
+          {title}
+        </h2>
+        <div class="mt-6">
+          <a href={ctaLink} class="premium-cta px-8 py-4 font-semibold inline-block">
+            {ctaText}
+          </a>
+        </div>
+      </div>
+      {/* Right: Script text */}
+      <div class="pb-[20%] sm:pb-[25%] md:pb-[30%] lg:pb-[35%] text-right">
+        <p class="[font-family:'Sacramento',cursive] font-normal tracking-[-0.01em] text-white text-[36px] leading-[28px] sm:text-[48px] sm:leading-[34px] md:text-[56px] md:leading-[36px] lg:text-[64px] lg:leading-[39px]">
+          {scriptText}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

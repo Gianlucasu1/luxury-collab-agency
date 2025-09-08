@@ -21,7 +21,7 @@ import ContactUs from "./pages/ContactUs";
 const queryClient = new QueryClient();
 
 // Toggle this flag to switch between Coming Soon page and full app
-const IS_COMING_SOON = false;
+const IS_COMING_SOON = true;
 
 const ScrollToTop = () => {
   const location = useLocation();

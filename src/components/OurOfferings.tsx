@@ -13,6 +13,8 @@ const OurOfferings = () => {
   const [expandedIndex, setExpandedIndex] = useState(0);
   const [contentVisible, setContentVisible] = useState(false);
   const [instantHide, setInstantHide] = useState(false);
+  const [mobileSlideIndex, setMobileSlideIndex] = useState(0);
+  const [isDesktop, setIsDesktop] = useState(false);
 
   const offerings = [
     {
@@ -50,6 +52,26 @@ const OurOfferings = () => {
     setExpandedIndex((prev) => (prev + 1) % offerings.length);
   };
 
+  const handleMobilePrevious = () => {
+    setMobileSlideIndex((prev) => (prev - 1 + offerings.length) % offerings.length);
+  };
+
+  const handleMobileNext = () => {
+    setMobileSlideIndex((prev) => (prev + 1) % offerings.length);
+  };
+
+  // Check if desktop on mount and resize
+  useEffect(() => {
+    const checkIsDesktop = () => {
+      setIsDesktop(window.innerWidth >= 1024);
+    };
+    
+    checkIsDesktop();
+    window.addEventListener('resize', checkIsDesktop);
+    
+    return () => window.removeEventListener('resize', checkIsDesktop);
+  }, []);
+
   // Show expanded card content with a delayed fade-in
   useEffect(() => {
     setContentVisible(false);
@@ -67,12 +89,12 @@ const OurOfferings = () => {
 
   return (
     <section id="offerings" className="py-24 bg-[#11353e] relative overflow-hidden">
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="main-container mx-auto px-6 relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-primary font-bold text-white mb-6">
             Our <span className="text-[#efb958]">Premium</span> Offerings
           </h2>
-          <p className="text-xl text-[#ead4b7] font-secondary max-w-2xl mx-auto">
+          <p className="text-xl text-white font-secondary max-w-2xl mx-auto">
             Discover a world of unparalleled luxury and exclusive experiences
           </p>
         </div>
@@ -117,17 +139,21 @@ const OurOfferings = () => {
                         style={{ backgroundImage: `url(${offering.image})` }}
                       />
                       
-                      {/* Gradient Overlay - Only show when expanded */}
-                      {isExpanded && (
-                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 via-black/30 to-transparent transition-all duration-500" />
-                      )}
+                      {/* Gradient Overlay - Different for expanded vs collapsed */}
+                      <div className={`absolute inset-0 transition-all duration-500 ${
+                        isExpanded 
+                          ? 'bg-gradient-to-t from-black via-black/50 to-transparent' 
+                          : 'bg-gradient-to-b from-black/80 via-black/40 to-transparent'
+                      }`} />
                       
-                      {/* CTA Button - Top Right */}
-                      <div className="absolute top-4 right-4 z-20">
-                        <Button asChild className="premium-cta px-4 py-2 text-sm">
-                          <Link to={offering.href}>Explore</Link>
-                        </Button>
-                      </div>
+                      {/* CTA Button - Top Right - Only show when expanded */}
+                      {isExpanded && (
+                        <div className="absolute top-4 right-4 z-20">
+                          <Button asChild className="premium-cta px-4 py-2 text-sm">
+                            <Link to={offering.href}>Explore</Link>
+                          </Button>
+                        </div>
+                      )}
                       
                       {/* Content */}
                       <div className="relative h-full p-8 flex flex-col justify-end">
@@ -156,11 +182,13 @@ const OurOfferings = () => {
                         ) : (
                           // Collapsed Card Content
                           <div className="h-full flex flex-col justify-between items-center">
-                            <div className="flex-1 flex items-center justify-center">
+                            {/* Title at the top */}
+                            <div className="pt-6">
                               <p className="text-white font-secondary font-semibold text-center text-sm">
                                 {offering.title}
                               </p>
                             </div>
+                            {/* Plus icon at the bottom */}
                             <div className="mb-6">
                               <div className="w-12 h-12 bg-[#efb958]/20 hover:bg-[#efb958]/40 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110 border border-[#efb958]/30">
                                 <Plus className="w-6 h-6 text-[#efb958]" />
@@ -177,44 +205,67 @@ const OurOfferings = () => {
           </div>
         </div>
 
-        {/* Mobile Card Slider */}
+        {/* Mobile/Tablet Card Slider */}
         <div className="lg:hidden">
-          <div className="overflow-x-auto pb-4">
-            <div className="flex space-x-4 w-max">
-              {offerings.map((offering, index) => {
-                return (
-                  <div
-                    key={offering.title}
-                    className="w-80 h-96 rounded-2xl overflow-hidden shadow-xl relative flex-shrink-0"
-                  >
-                    <div 
-                      className="absolute inset-0 bg-cover bg-center"
-                      style={{ backgroundImage: `url(${offering.image})` }}
-                    />
-                    
-                    {/* Gradient Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 via-black/30 to-transparent" />
-                    
-                    {/* CTA Button - Top Right */}
-                    <div className="absolute top-4 right-4 z-20">
-                      <Button asChild className="premium-cta text-xs px-3 py-2">
-                        <Link to={offering.href}>Explore</Link>
-                      </Button>
-                    </div>
-                    
-                    <div className="relative h-full p-6 flex flex-col justify-end">
-                      <div className="mb-4">
-                        <h3 className="text-2xl font-primary font-bold text-white mb-3 italic">
-                          {offering.title}
-                        </h3>
-                        <p className="text-white font-secondary text-sm leading-relaxed">
-                          {offering.description}
-                        </p>
+          <div className="relative">
+            {/* Navigation Buttons for Mobile/Tablet */}
+            <button
+              onClick={handleMobilePrevious}
+              className="absolute left-2 top-1/2 transform -translate-y-1/2 z-20 w-10 h-10 bg-[#2a6781]/80 hover:bg-[#2a6781] text-[#efb958] rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 backdrop-blur-sm border border-[#efb958]/20"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            
+            <button
+              onClick={handleMobileNext}
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 z-20 w-10 h-10 bg-[#2a6781]/80 hover:bg-[#2a6781] text-[#efb958] rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 backdrop-blur-sm border border-[#efb958]/20"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+
+            {/* Mobile Slider Container */}
+            <div className="overflow-hidden">
+              <div 
+                className="flex transition-transform duration-500 ease-in-out"
+                style={{ transform: `translateX(-${mobileSlideIndex * 100}%)` }}
+              >
+                {offerings.map((offering, index) => {
+                  return (
+                    <div
+                      key={offering.title}
+                      className="w-full flex-shrink-0 px-4"
+                    >
+                      <div className="h-96 rounded-2xl overflow-hidden shadow-xl relative">
+                        <div 
+                          className="absolute inset-0 bg-cover bg-center"
+                          style={{ backgroundImage: `url(${offering.image})` }}
+                        />
+                        
+                        {/* Gradient Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+                        
+                        {/* CTA Button - Top Right */}
+                        <div className="absolute top-4 right-4 z-20">
+                          <Button asChild className="premium-cta text-xs px-3 py-2">
+                            <Link to={offering.href}>Explore</Link>
+                          </Button>
+                        </div>
+                        
+                        <div className="relative h-full p-6 flex flex-col justify-end">
+                          <div className="mb-4">
+                            <h3 className="text-2xl font-primary font-bold text-white mb-3 italic">
+                              {offering.title}
+                            </h3>
+                            <p className="text-white font-secondary text-sm leading-relaxed">
+                              {offering.description}
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
@@ -224,9 +275,13 @@ const OurOfferings = () => {
           {offerings.map((_, index) => (
             <button
               key={index}
-              onClick={() => setExpandedIndex(index)}
+              onClick={() => {
+                setExpandedIndex(index);
+                setMobileSlideIndex(index);
+              }}
               className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                index === expandedIndex 
+                (index === expandedIndex && isDesktop) || 
+                (index === mobileSlideIndex && !isDesktop)
                   ? 'bg-[#efb958] scale-125' 
                   : 'bg-[#ead4b7]/50 hover:bg-[#ead4b7]'
               }`}
